@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.application.fitgym">
+
+    <application
+        android:name=".helpers.GymApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FitGym">
+        <activity android:name=".activities.customer.TaskActivity"
+            android:noHistory="false"
+            android:parentActivityName=".activities.customer.HomeActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".activities.admin.ManageCustomersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin.ManageInventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin.ManagePlansActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin.ConfirmNewCustomersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.customer.EmailPassUserRegistration"
+            android:exported="false" />
+        <activity
+            android:name=".activities.customer.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.customer.RegUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.splash_screen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.customer.LoginSignUpActivity"
+            android:exported="true" />
+    </application>
+
+</manifest>

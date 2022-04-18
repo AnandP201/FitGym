@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">FitGym</string>
+    <string name="image_icon">Gym Icon</string>
+    <string name="splash_desc">Manage Your Gym</string>
+    <string name="author">Made By Anand</string>
+    <string name="text_hint">Email</string>
+    <string name="pass_hint">Password</string>
+    <string name="alt_text">Sign-up using Google Account</string>
+    <string name="input_not_valid">You cannot leave fields empty!</string>
+    <string name="login_not_success">Invalid credentials! No user found with the given credentials!</string>
+    <string name="fetching_records_txt">Setting you up in app....</string>
+    <string name="nav_open">OPEN</string>
+    <string name="nav_close">CLOSE</string>
+    <string name="admin_login">Logging in as admin....</string>
+    <array name="plan_type">
+        <item>NORMAL</item>
+        <item>ADD-ON</item>
+    </array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_manage_inventory">ManageInventoryActivity</string>
+
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/primaryTextColor"
+    android:theme="@style/Theme.AppCompat.DayNight"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/home_header_imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ic_account_circle"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/name_welcome_textView"
+            android:layout_width="match_parent"
+            android:fontFamily="@font/quicksand_medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/darkColor"
+            android:textSize="15sp"
+            android:paddingStart="15dp"
+            android:padding="6dp"
+            android:text="Loading...."
+            android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/gym_uniqueID_textView"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/quicksand_medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                android:paddingStart="15dp"
+                android:padding="6dp"
+                android:text="GT-1109B"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/underregistration_textview"
+                android:layout_width="match_parent"
+                android:paddingStart="15dp"
+                android:padding="6dp"
+                android:text="Currently, you are under-registration"
+                android:textStyle="italic"
+                android:fontFamily="@font/quicksand_medium"
+                android:textColor="@color/common_google_signin_btn_text_light"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

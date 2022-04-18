@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Profile picture"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        android:fontFamily="@font/quicksand_medium"
+        android:padding="6dp"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="100"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:id="@+id/upload_picture_button"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_gravity="center"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/secondaryDarkColor"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_add_a_photo_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:fontFamily="@font/quicksand_medium"
+                android:padding="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="18sp"
+                android:text="Upload"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/delete_picture_button"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:padding="5dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/secondaryDarkColor"
+                android:background="@drawable/ic_baseline_delete_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:fontFamily="@font/quicksand_medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="18sp"
+                android:padding="5dp"
+
+                android:text="Remove"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+

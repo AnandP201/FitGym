@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="?android:attr/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context=".activities.customer.LoginSignUpActivity"
+    tools:ignore="HardcodedText"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:textSize="48sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <EditText
+        android:layout_width="400dp"
+        android:id="@+id/email_text"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:hint="@string/text_hint"
+        android:drawableStart="@drawable/ic_baseemail"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:layout_width="400dp"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        android:id="@+id/password_text"
+        android:textSize="18sp"
+        android:hint="@string/pass_hint"
+        android:textAlignment="center"
+        android:drawableStart="@drawable/ic_key"
+        android:inputType="textPassword"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:layout_width="130dp"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/login_button"
+        android:fontFamily="@font/quicksand_medium"
+        android:textColor="@color/primaryTextColor"
+        android:textAllCaps="false"
+        android:background="@color/secondaryDarkColor"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="5dp"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        />
+    <LinearLayout
+        android:id="@+id/new_register_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_weight="50"
+            android:textSize="16sp"
+            android:fontFamily="@font/quicksand_medium"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textAlignment="textEnd"
+            android:text="New to FitGym ?"
+            />
+        <TextView
+            android:id="@+id/text_button"
+            android:layout_width="match_parent"
+            android:layout_weight="50"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:shadowColor="@color/secondaryDarkColor"
+            android:shadowDx="5"
+            android:shadowDy="12"
+            android:fontFamily="@font/quicksand_medium"
+            android:shadowRadius="10"
+            android:layout_height="wrap_content"
+            android:text="Register Now !"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:padding="5dp"
+            />
+
+    </LinearLayout>
+
+   <LinearLayout
+       android:id="@+id/or_seperator"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:weightSum="9"
+       android:layout_marginTop="16dp">
+
+       <View
+           android:layout_width="0dp"
+           android:layout_height="3dp"
+           android:layout_weight="4"
+           android:layout_marginStart="30dp"
+           android:background="@color/secondaryDarkColor"/>
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:text="OR"
+           android:textAppearance="@style/TextAppearance.AppCompat"
+           android:textSize="16sp"
+            android:textAlignment="center"
+           android:layout_marginTop="-5dp"
+           android:layout_weight="1"/>
+       <View
+           android:layout_width="0dp"
+           android:layout_height="3dp"
+           android:layout_weight="4"
+           android:layout_marginEnd="30dp"
+           android:background="@color/secondaryDarkColor"/>
+   </LinearLayout>
+
+    <TextView
+        android:id="@+id/signusingGoogleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alt_text"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="16sp"
+        android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+    <Button
+        android:id="@+id/google_signup_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableStart="@drawable/google_icon_min"
+        android:text="Google"
+        android:fontFamily="@font/quicksand_medium"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:textSize="18sp" />
+
+</LinearLayout>

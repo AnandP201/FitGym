@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/Theme.FitGym"
+    android:background="?android:attr/colorPrimary"
+    >
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/logo"
+        android:src="@drawable/icon_gym_round"
+        android:layout_gravity="center"
+        android:layout_marginTop="250dp"
+        android:contentDescription="@string/image_icon" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/title"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="@string/splash_desc"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/author_desc"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="260dp"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="@string/author" />
+
+
+</LinearLayout>

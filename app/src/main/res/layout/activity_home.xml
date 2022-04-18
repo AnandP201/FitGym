@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="?android:attr/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context=".activities.admin.AdminActivity">
+
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/customer_dashboard_toolbar"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="20dp"
+        android:backgroundTint="@color/primaryTextColor"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/profile_summary"
+            layout="@layout/navigation_header"
+            />
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="15dp"
+        android:backgroundTint="@color/primaryTextColor"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="Basic membership validity"
+                android:fontFamily="@font/catamaran_regular"
+                android:padding="3dp"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:textColor="@color/common_google_signin_btn_text_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/membership_plan"
+                android:fontFamily="@font/quicksand_regular"
+                android:textStyle="bold"
+                android:padding="3dp"
+                android:textColor="@color/darkColor"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="Buy a basic plan to be a member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:padding="3dp"
+                android:textStyle="italic"
+                android:textColor="@color/common_google_signin_btn_text_light"
+                android:fontFamily="@font/catamaran_regular"
+                android:text="Add-Ons "
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/addon_plans"
+                android:fontFamily="@font/quicksand_regular"
+                android:textStyle="bold"
+                android:padding="3dp"
+                android:textAlignment="center"
+                android:textColor="@color/darkColor"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="No add-ons purchased"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="8"
+        android:layout_marginTop="16dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_weight="3"
+            android:layout_marginStart="20dp"
+            android:background="@color/secondaryDarkColor"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Services"
+            android:fontFamily="@font/quicksand_medium"
+            android:textColor="@color/common_google_signin_btn_text_light"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_marginTop="-5dp"
+            android:layout_weight="2"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_weight="3"
+            android:layout_marginEnd="20dp"
+            android:background="@color/secondaryDarkColor"/>
+    </LinearLayout>
+    <GridView
+        android:id="@+id/customer_dashboard_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="120dp"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="2"
+        android:verticalSpacing="5dp" />
+
+</LinearLayout>

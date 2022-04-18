@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="?android:attr/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context=".activities.admin.AdminActivity">
+
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/admin_dashboard_toolbar"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="20dp"
+        android:backgroundTint="@color/primaryTextColor"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="50dp"
+                app:tint="#ff3900"
+                android:src="@drawable/ic_baseline_admin"
+                android:layout_height="50dp"/>
+            <TextView
+                android:id="@+id/admin_dashboard_adminnameText"
+                android:layout_width="match_parent"
+                android:textSize="22sp"
+                android:textColor="#000"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:fontFamily="@font/catamaran_regular"
+                android:padding="5dp"
+                android:gravity="center|start"
+                android:text="Welcome, Admin"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    app:cardElevation="8dp"
+    app:cardUseCompatPadding="true"
+    android:backgroundTint="@color/primaryTextColor"
+    app:cardCornerRadius="20dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:fontFamily="@font/catamaran_regular"
+            android:textSize="14sp"
+            android:textColor="@color/common_google_signin_btn_text_light"
+            android:padding="5dp"
+            android:text="Registered customers "
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/admin_dashboard_crcustomerscount_text"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/catamaran_regular"
+                    android:padding="5dp"
+                    android:shadowColor="?android:attr/colorPrimaryDark"
+                    android:shadowRadius="5"
+                    android:shadowDy="6"
+                    android:textAlignment="center"
+                    android:shadowDx="5"
+                    android:text="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/secondaryDarkColor"
+                    android:textSize="42sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|start"
+                    android:textColor="#000"
+                    android:fontFamily="@font/catamaran_regular"
+                    android:padding="5dp"
+                    android:text="Currently available"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="50"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/admin_dashboard_newcustomerscount_text"
+                    android:layout_width="60dp"
+                    android:textSize="42sp"
+                    android:shadowColor="?android:attr/colorPrimaryDark"
+                    android:shadowRadius="5"
+                    android:shadowDy="6"
+                    android:shadowDx="5"
+                    android:text="0"
+                    android:textColor="@color/secondaryDarkColor"
+                    android:fontFamily="@font/catamaran_regular"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:padding="5dp"
+                    android:fontFamily="@font/catamaran_regular"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:gravity="center|start"
+                    android:text="New requests"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Gym plans status"
+                android:textColor="@color/common_google_signin_btn_text_light"
+                android:fontFamily="@font/catamaran_regular"
+                android:padding="5dp"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/admin_dashboard_planscount_text"
+                    android:layout_width="60dp"
+                    android:textSize="42sp"
+                    android:text="0"
+                    android:shadowColor="?android:attr/colorPrimaryDark"
+                    android:shadowRadius="5"
+                    android:shadowDy="6"
+                    android:shadowDx="5"
+                    android:textColor="@color/secondaryDarkColor"
+                    android:fontFamily="@font/catamaran_regular"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:padding="5dp"
+                    android:fontFamily="@font/catamaran_regular"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:gravity="center|start"
+                    android:text="Existing subscription plans"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:id="@+id/or_seperator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="8"
+        android:layout_marginTop="16dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_weight="3"
+            android:layout_marginStart="20dp"
+            android:background="@color/secondaryDarkColor"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Services"
+            android:fontFamily="@font/quicksand_medium"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_marginTop="-5dp"
+            android:layout_weight="2"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_weight="3"
+            android:layout_marginEnd="20dp"
+            android:background="@color/secondaryDarkColor"/>
+    </LinearLayout>
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:columnWidth="120dp"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="2"
+        android:verticalSpacing="5dp" />
+
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:padding="8dp"
+        android:text="New Task"
+        android:textAllCaps="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/task_creation_time_box"
+        android:fontFamily="@font/catamaran_regular"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Task Title : "
+        android:layout_height="wrap_content"
+        android:padding="5dp"/>
+    <EditText
+        android:id="@+id/input_task_title"
+        android:layout_width="match_parent"
+        android:textSize="14sp"
+        android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:fontFamily="@font/quicksand_medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:text="Task Description : \n( Jot down your daily exercises, diet, protein intakes and many more.. )"
+            android:layout_height="wrap_content"
+            android:padding="5dp"/>
+
+        <EditText
+            android:id="@+id/input_description_box"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:textSize="14sp"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:padding="5dp" />
+    <Button
+        android:id="@+id/add_task_button"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/primaryTextColor"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="SAVE TASK"
+        android:background="@color/secondaryDarkColor"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

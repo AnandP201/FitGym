@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/register_new_user_mainlayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="?android:attr/colorPrimary"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.customer.RegUserActivity">
+
+    <include
+        android:id="@+id/app_bar_reg_form"
+        layout="@layout/app_bar"
+        />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/icon_gym_round"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:fontFamily="@font/quicksand_medium"
+        android:textAlignment="center"
+        android:text="Register in FitGym"
+        android:textSize="28sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/quicksand_medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:text="Just some few steps to become our member...."
+        android:textSize="14sp"
+        />
+
+
+    <EditText
+        android:id="@+id/email_text"
+        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:hint="Enter email"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"/>
+    <EditText
+        android:id="@+id/name_newreg_text"
+        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:hint="Enter name"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
+    <EditText
+        android:id="@+id/password_text"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:inputType="textPassword"
+        android:hint="Enter a password"
+        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/password2_text"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:inputType="textPassword"
+        android:hint="Confirm password"
+        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:id="@+id/show_password_check"
+        android:text="Show password"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/quicksand_medium"
+        android:buttonTint="@color/secondaryDarkColor"
+        android:layout_gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/register_button_email_registration"
+        android:layout_width="150dp"
+        android:background="@color/secondaryDarkColor"
+        android:textSize="16sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:fontFamily="@font/quicksand_medium"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:textColor="@color/primaryTextColor"
+        android:text="REGISTER"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
