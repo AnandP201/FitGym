@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,8 @@ import com.application.fitgym.R;
 
 import com.application.fitgym.models.customers;
 import com.application.fitgym.models.resources;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,10 +55,12 @@ public class HomeActivity extends AppCompatActivity{
     customers currentCustomer;
     resources currentCustomerResource;
     private ImageView displayPictureImageView;
+    private boolean IS_MEMBER_FLAG=false;
     private TextView uniqueIDTextView,unregisteredTextView,nameTextView;
     private GridView cDashboardGridview;
     List<CustomerDashMenuItems> customerDashMenuItems;
     private Realm customersRealm,resourcesRealm;
+    private LinearLayout linearLayout;
 
     private RealmResults<customers> customersRealmResults;
     private RealmResults<resources> resourcesRealmResults;
@@ -70,6 +76,7 @@ public class HomeActivity extends AppCompatActivity{
         app= GymApplication.getGlobalAppInstance();
         View view=findViewById(R.id.profile_summary);
 
+        linearLayout=findViewById(R.id.customer_home_layout);
         displayPictureImageView=view.findViewById(R.id.home_header_imageView);
         unregisteredTextView=view.findViewById(R.id.underregistration_textview);
         uniqueIDTextView=view.findViewById(R.id.gym_uniqueID_textView);
@@ -112,6 +119,8 @@ public class HomeActivity extends AppCompatActivity{
             currentCustomer=customersRealm.where(customers.class)
                     .contains("authID",app.currentUser().getId()).findFirst();
 
+            checkCurrentRegisteredStatus();
+
             if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("NA")){
                 showTextViewAsPerRegistration(0);
             }
@@ -136,7 +145,7 @@ public class HomeActivity extends AppCompatActivity{
             currentCustomer=customersRealm.where(customers.class)
                     .contains("authID",app.currentUser().getId()).findFirst();
             if(currentCustomer!=null){
-
+                checkCurrentRegisteredStatus();
                 if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("NA")){
                     showTextViewAsPerRegistration(0);
                 }
@@ -158,9 +167,7 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
 
-        currentCustomer.addChangeListener(realmModel -> {
-            Log.i("CHANGES IN CURRENT CUSTOMER","Changes occurred!");
-        });
+
 
 
 
@@ -171,20 +178,50 @@ public class HomeActivity extends AppCompatActivity{
                     startActivity(new Intent(HomeActivity.this,TaskActivity.class));
                     break;
                 case "plans":
+                    if(IS_MEMBER_FLAG){
 
+                    }else{
+                        Snackbar.make(this,linearLayout,"Membership required!", BaseTransientBottomBar.LENGTH_LONG).show();
+                    }
                     break;
                 case "people":
+                    if(IS_MEMBER_FLAG){
 
+                    }else{
+                        Snackbar.make(this,linearLayout,"Membership required!", BaseTransientBottomBar.LENGTH_LONG).show();
+                    }
                     break;
                 case "bills":
+                    if(IS_MEMBER_FLAG){
 
-                    break;
+                    }else {
+                        Snackbar.make(this, linearLayout, "Membership required!", BaseTransientBottomBar.LENGTH_LONG).show();
+                    }
+                        break;
                 default:
                     Toast.makeText(this, customerDashMenuItems.get(i).getAction(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void checkCurrentRegisteredStatus(){
+
+        if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("OK")){
+            IS_MEMBER_FLAG=true;
+
+        }else{
+            IS_MEMBER_FLAG=false;
+
+        }
+    }
+
+    private void switchActivity(Context context){
+        if(IS_MEMBER_FLAG){
+            startActivity(new Intent(this,context.getClass()));
+        }else{
+            Snackbar.make(this,linearLayout,"Membership required!", BaseTransientBottomBar.LENGTH_LONG).show();
+        }
+    }
 
     private void setHeaderName() {
         nameTextView.setText(String.format("Welcome, %s",currentCustomer.getName().split(" ")[0]));
