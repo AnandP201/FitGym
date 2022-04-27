@@ -122,7 +122,7 @@ public class ManagePlansActivity extends AppCompatActivity {
                     p.setDuration(validity);
                     p.setTitle(title);
                     p.set_partition();
-                    p.setPlanID(String.valueOf(type.charAt(0)+"P-").toUpperCase()+IDCount);
+                    p.setPlanID((type.charAt(0) + "P-").toUpperCase()+IDCount);
 
                     realm.executeTransaction(realm -> {
                         realm.insertOrUpdate(p);

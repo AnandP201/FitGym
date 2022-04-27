@@ -12,6 +12,28 @@
     <include
         layout="@layout/app_bar"
         android:id="@+id/admin_cnfnewcust_toolbar"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/new_customers_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ProgressBar
+            android:id="@+id/new_customers_loading"
+            android:layout_width="match_parent"
+            android:indeterminateTint="@color/secondaryDarkColor"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/new_customers_text_info"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="Request List is empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 
 
 </LinearLayout>
