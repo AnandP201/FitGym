@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="?android:attr/colorPrimary"
     android:layout_height="match_parent"
-    tools:context=".activities.admin.ConfirmNewCustomersActivity">
+    tools:context=".activities.admin.ManageNewCustomersActivity">
 
     <include
         layout="@layout/app_bar"

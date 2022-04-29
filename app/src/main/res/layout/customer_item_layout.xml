@@ -8,9 +8,6 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/plan_card"
         android:layout_width="match_parent"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="8dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:backgroundTint="@color/primaryTextColor"
         android:layout_height="wrap_content">

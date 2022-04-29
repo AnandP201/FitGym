@@ -25,6 +25,7 @@
     <EditText
         android:layout_width="400dp"
         android:id="@+id/email_text"
+        android:fontFamily="@font/quicksand_medium"
         android:layout_gravity="center"
         android:padding="15dp"
         android:textAlignment="center"
@@ -38,6 +39,7 @@
         android:layout_width="400dp"
         android:layout_gravity="center"
         android:padding="15dp"
+        android:fontFamily="@font/quicksand_medium"
         android:id="@+id/password_text"
         android:textSize="18sp"
         android:hint="@string/pass_hint"

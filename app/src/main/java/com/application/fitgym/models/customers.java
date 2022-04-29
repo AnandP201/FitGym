@@ -75,4 +75,18 @@ public class customers extends RealmObject {
     public String getRegistrationStatus() {
         return RegistrationStatus;
     }
+
+    @Override
+    public String toString() {
+        return "customers{" +
+                "_id=" + _id +
+                ", _partition='" + _partition + '\'' +
+                ", Name='" + Name + '\'' +
+                ", Gender='" + Gender + '\'' +
+                ", authID='" + authID + '\'' +
+                ", Age='" + Age + '\'' +
+                ", Phone='" + Phone + '\'' +
+                ", RegistrationStatus='" + RegistrationStatus + '\'' +
+                '}';
+    }
 }

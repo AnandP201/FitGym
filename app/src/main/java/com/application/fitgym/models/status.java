@@ -6,12 +6,15 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class status{
+public class status extends RealmObject{
 
-    @Required @PrimaryKey
-    ObjectId _id =new ObjectId();
+    @PrimaryKey
+    private ObjectId _id =new ObjectId();
 
-    private String userAuthID,gymUserID,activePlans,status,planActiveDuration,memberSince,_partition;
+    @Required
+    private String _partition;
+
+    private String userAuthID,gymUserID,activePlans,stats,planActiveDuration,memberSince;
 
     public void setUserAuthID(String userAuthID) {
         this.userAuthID = userAuthID;
@@ -25,8 +28,8 @@ public class status{
         this.activePlans = activePlans;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStats(String stats) {
+        this.stats = stats;
     }
 
     public void setPlanActiveDuration(String planActiveDuration) {
@@ -61,7 +64,7 @@ public class status{
         return planActiveDuration;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStats() {
+        return stats;
     }
 }

@@ -30,6 +30,7 @@ import java.util.List;
 
 import io.realm.Realm;
 
+import io.realm.RealmChangeListener;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
@@ -47,6 +48,8 @@ public class AdminActivity extends AppCompatActivity {
     private RealmResults<customers> customersList;
     private RealmResults<plans> plansList;
     private int unregisteredCount,registeredCount;
+    RealmChangeListener<RealmResults<customers>> custCountListener;
+    RealmChangeListener<RealmResults<plans>> plansCountListener;
     private RealmResults<admin> adminList;
     private SyncConfiguration adminSyncConfigurationFile,customerSyncConfigurationFile,plansSyncConfigurationFile;
     private TextView adminLogoutCancelView,adminLogoutView,adminNameTextView,totalCustomersCountTextView,newRegistrationCountTextView,plansCountTextView;
@@ -77,10 +80,9 @@ public class AdminActivity extends AppCompatActivity {
         gridView.setOnItemClickListener((adapterView, view, i, l) -> {
             switch(list.get(i).getAction()){
                 case "customers":
-                    startActivity(new Intent(this,ConfirmNewCustomersActivity.class));
+                    startActivity(new Intent(this,ManageNewCustomersActivity.class));
                     break;
                 case "plans":
-                    plansRealm.close();
                     startActivity(new Intent(this,ManagePlansActivity.class));
                     break;
                 case "manage":
@@ -170,13 +172,18 @@ public class AdminActivity extends AppCompatActivity {
 
         }
 
-        customersList.addChangeListener(customers -> {
-            setCount();
-        });
 
-        plansList.addChangeListener((plans,changeSet)->{
+
+        custCountListener= (RealmChangeListener<RealmResults<customers>>) realm -> {
+            setCount();
+        };
+
+        plansCountListener= (RealmChangeListener<RealmResults<plans>>) realm->{
             setPlansCount();
-        });
+        };
+
+        customersList.addChangeListener(custCountListener);
+        plansList.addChangeListener(plansCountListener);
 
         adminList.addChangeListener(admins->{
             setName();
@@ -187,6 +194,10 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        customersList.removeChangeListener(custCountListener);
+        plansList.removeChangeListener(plansCountListener);
+
         if(adminRealm!=null){
             adminRealm.close();
         }
@@ -196,6 +207,8 @@ public class AdminActivity extends AppCompatActivity {
         if(plansRealm!=null){
             plansRealm.close();
         }
+
+
     }
 
     private void setPlansCount() {
@@ -242,7 +255,10 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("ADMIN ACTIVITY ","destroyed");
+
+        customersList.removeChangeListener(custCountListener);
+        plansList.removeChangeListener(plansCountListener);
+
         if(adminRealm!=null){
             adminRealm.close();
         }

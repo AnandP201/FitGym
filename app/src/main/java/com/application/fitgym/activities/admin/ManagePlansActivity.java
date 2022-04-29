@@ -24,6 +24,7 @@ import com.application.fitgym.models.plans;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.User;
@@ -41,6 +42,7 @@ public class ManagePlansActivity extends AppCompatActivity {
     private String title,desc,price,validity,type;
     private App app;
     private PlansAdapter plansAdapter;
+    RealmChangeListener<RealmResults<plans>> plansListener;
     private User user;
     private RecyclerView plansRecyclerView;
     private Realm realm;
@@ -148,10 +150,17 @@ public class ManagePlansActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-        plansResults.addChangeListener((plans,changeSet)->{
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        plansListener=(RealmChangeListener<RealmResults<plans>>)results->{
             plansAdapter.notifyDataSetChanged();
-        });
+        } ;
+
+        plansResults.addChangeListener(plansListener);
     }
 
     private void refreshAdapter() {
@@ -169,13 +178,15 @@ public class ManagePlansActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        plansResults.removeChangeListener(plansListener);
         realm.close();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("PLANS ACTIVITY","Destroyed!!");
+
+        plansResults.removeChangeListener(plansListener);
         realm.close();
     }
 }
