@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.fitgym.activities.admin.AdminActivity;
+import com.application.fitgym.activities.admin.ManageNewCustomersActivity;
 import com.application.fitgym.helpers.GymApplication;
 import com.application.fitgym.R;
 import com.application.fitgym.helpers.UserInfo;
@@ -247,7 +248,6 @@ public class LoginSignUpActivity extends AppCompatActivity implements View.OnCli
         account=GoogleSignIn.getLastSignedInAccount(this);
         return UserInfo.storeAndGetUserInfoBundle(account.getDisplayName(),account.getPhotoUrl().toString());
     }
-
 
     @Override
     protected void onDestroy() {

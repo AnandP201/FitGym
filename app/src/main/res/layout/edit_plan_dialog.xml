@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="?android:attr/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/caption_editdialog_plan"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:padding="8dp"
+        android:text="New PLAN"
+        android:textAllCaps="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="Type"
+            android:layout_height="wrap_content"
+            android:padding="5dp"/>
+
+        <Spinner
+            android:id="@+id/edit_plan_type_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:entries="@array/plan_type"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="Title"
+            android:layout_height="wrap_content"
+            android:padding="5dp"/>
+
+        <EditText
+            android:id="@+id/edit_plan_tts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_regular"
+            android:layout_weight="6"
+            android:textSize="14sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="Price (in INR)"
+            android:layout_height="wrap_content"
+            android:padding="5dp"/>
+        <EditText
+            android:id="@+id/edit_plan_price"
+            android:layout_width="0dp"
+            android:fontFamily="@font/quicksand_regular"
+            android:inputType="numberDecimal|numberSigned"
+            android:layout_weight="6"
+            android:textSize="14sp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="Validity (in months)"
+            android:layout_height="wrap_content"
+            android:padding="5dp"/>
+
+        <EditText
+            android:id="@+id/edit_plan_validity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:fontFamily="@font/quicksand_regular"
+            android:inputType="numberDecimal|numberSigned"
+            android:textSize="14sp"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:fontFamily="@font/quicksand_medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:text="Perks"
+        android:layout_height="wrap_content"
+        android:padding="5dp"/>
+
+    <EditText
+        android:id="@+id/edit_plan_perks"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:textSize="14sp"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:padding="8dp" />
+    <Button
+        android:id="@+id/edit_plan_button"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/primaryTextColor"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="EDIT"
+        android:background="@color/secondaryDarkColor"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

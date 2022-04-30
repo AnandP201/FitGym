@@ -50,6 +50,7 @@ public class AdminActivity extends AppCompatActivity {
     private int unregisteredCount,registeredCount;
     RealmChangeListener<RealmResults<customers>> custCountListener;
     RealmChangeListener<RealmResults<plans>> plansCountListener;
+    RealmChangeListener<RealmResults<admin>> adminRealmListener;
     private RealmResults<admin> adminList;
     private SyncConfiguration adminSyncConfigurationFile,customerSyncConfigurationFile,plansSyncConfigurationFile;
     private TextView adminLogoutCancelView,adminLogoutView,adminNameTextView,totalCustomersCountTextView,newRegistrationCountTextView,plansCountTextView;
@@ -182,34 +183,15 @@ public class AdminActivity extends AppCompatActivity {
             setPlansCount();
         };
 
+        adminRealmListener = (RealmChangeListener<RealmResults<admin>>) realm->{
+            setName();
+        };
+
         customersList.addChangeListener(custCountListener);
         plansList.addChangeListener(plansCountListener);
-
-        adminList.addChangeListener(admins->{
-            setName();
-        });
+        adminList.addChangeListener(adminRealmListener);
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        customersList.removeChangeListener(custCountListener);
-        plansList.removeChangeListener(plansCountListener);
-
-        if(adminRealm!=null){
-            adminRealm.close();
-        }
-        if(customerRealm!=null){
-            customerRealm.close();
-        }
-        if(plansRealm!=null){
-            plansRealm.close();
-        }
-
-
-    }
 
     private void setPlansCount() {
         plansList=plansRealm.where(plans.class).findAll();
@@ -253,20 +235,15 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
 
         customersList.removeChangeListener(custCountListener);
         plansList.removeChangeListener(plansCountListener);
+        adminList.removeChangeListener(adminRealmListener);
 
-        if(adminRealm!=null){
-            adminRealm.close();
-        }
-        if(customerRealm!=null){
-            customerRealm.close();
-        }
-        if(plansRealm!=null){
-            plansRealm.close();
-        }
+        adminRealm.close();
+        customerRealm.close();
+        plansRealm.close();
     }
 }

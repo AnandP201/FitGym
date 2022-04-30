@@ -147,6 +147,9 @@ public class ManageNewCustomersActivity extends AppCompatActivity implements App
             if(!filteredList.isEmpty()){
                 adapter=new ToRegisterCustomersAdapter(filteredList,resourcesRealmResults,this,this);
                 recyclerView.setAdapter(adapter);
+            }else{
+                showProgressBar(false);
+                showEmptyInfo(true);
             }
         }else{
             showEmptyInfo(true);
@@ -168,6 +171,7 @@ public class ManageNewCustomersActivity extends AppCompatActivity implements App
 
         if(tempFilter.size()>0){
             showProgressBar(false);
+            showEmptyInfo(false);
         }else{
             showEmptyInfo(true);
         }
@@ -178,33 +182,6 @@ public class ManageNewCustomersActivity extends AppCompatActivity implements App
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        customerRealmResults.removeChangeListener(customersListener);
-        resourcesRealmResults.removeChangeListener(resourcesListener);
-
-        resourceRealm.close();
-        statusRealm.close();
-        adminRealm.close();
-        userRealm.close();
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-
-        customerRealmResults.removeChangeListener(customersListener);
-        resourcesRealmResults.removeChangeListener(resourcesListener);
-
-        resourceRealm.close();
-        statusRealm.close();
-        adminRealm.close();
-        userRealm.close();
-    }
 
     private void approveFunc(){
         String toStore;
@@ -288,5 +265,18 @@ public class ManageNewCustomersActivity extends AppCompatActivity implements App
         }else{
             loadingIcon.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        customerRealmResults.removeChangeListener(customersListener);
+        resourcesRealmResults.removeChangeListener(resourcesListener);
+
+        resourceRealm.close();
+        statusRealm.close();
+        adminRealm.close();
+        userRealm.close();
     }
 }
