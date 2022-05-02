@@ -11,12 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FitGym">
-        <activity android:name=".activities.customer.TaskActivity"
+        <activity
+            android:name=".activities.customer.BillingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.customer.CustomerPlansActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.customer.PeersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.customer.TaskActivity"
+            android:exported="true"
             android:noHistory="false"
-            android:parentActivityName=".activities.customer.HomeActivity"
-            android:exported="true"/>
-        <activity android:name=".activities.admin.ManageNewCustomersActivity"
-            android:exported="false"/>
+            android:parentActivityName=".activities.customer.HomeActivity" />
+        <activity
+            android:name=".activities.admin.ManageNewCustomersActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.admin.ManageCustomersActivity"
             android:exported="false" />
@@ -30,16 +41,16 @@
             android:name=".activities.admin.AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.customer.EmailPassUserRegistration"
+            android:name=".misc.EmailPassUserRegistration"
             android:exported="false" />
         <activity
             android:name=".activities.customer.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.customer.RegUserActivity"
+            android:name=".misc.RegUserActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.splash_screen"
+            android:name=".misc.splash_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,7 +59,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.customer.LoginSignUpActivity"
+            android:name=".misc.LoginSignUpActivity"
             android:exported="true" />
     </application>
 

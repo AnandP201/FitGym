@@ -1,4 +1,4 @@
-package com.application.fitgym.activities.customer;
+package com.application.fitgym.misc;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.application.fitgym.helpers.GymApplication;
 import com.application.fitgym.R;
+import com.application.fitgym.helpers.GymApplication;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 

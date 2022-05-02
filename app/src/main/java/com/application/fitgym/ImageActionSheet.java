@@ -57,9 +57,6 @@ public class ImageActionSheet extends BottomSheetDialogFragment{
         this.imageUploadInterface=imageUploadInterfaceActivity;
     }
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

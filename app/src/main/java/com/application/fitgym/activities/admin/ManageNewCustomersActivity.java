@@ -127,11 +127,11 @@ public class ManageNewCustomersActivity extends AppCompatActivity implements App
         customerRealmResults=userRealm.where(customers.class).findAll();
         resourcesRealmResults=resourceRealm.where(resources.class).findAll();
 
-        customersListener=(RealmChangeListener<RealmResults<customers>>) results->{
+        customersListener= results->{
           refresh();
         };
 
-        resourcesListener=(RealmChangeListener<RealmResults<resources>>) results->{
+        resourcesListener= results->{
           refresh();
         };
 
@@ -232,7 +232,7 @@ public class ManageNewCustomersActivity extends AppCompatActivity implements App
             s.setGymUserID(toStore);
             s.setStats("offline");
 
-            SimpleDateFormat sdf=new SimpleDateFormat("dd-mm-yyyy");
+            SimpleDateFormat sdf=new SimpleDateFormat("dd-MMMM-yy");
             Calendar calendar=Calendar.getInstance();
             s.setMemberSince(sdf.format(calendar.getTime()));
 

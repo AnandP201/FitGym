@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#00ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardElevation="6dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="10dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:background="?android:attr/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/profile_dialog_image_view"
+                android:layout_width="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_account_circle"
+                android:layout_height="100dp"/>
+            <TextView
+                android:id="@+id/profile_dialog_name_text"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/catamaran_regular"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:text="Anand S. Pai"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/profile_dialog_age_gen_text"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/catamaran_regular"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textStyle="italic"
+                android:text="14, Male"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/profile_dialog_uniqueid_text"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/catamaran_regular"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:text="GYM ID : FGM101"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/profile_dialog_plans_text"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:fontFamily="@font/catamaran_regular"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:text="Plans active : NP-0, AP-1"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/profile_dialog_since_text"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/catamaran_regular"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:text="Member since : 18-May-2022"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

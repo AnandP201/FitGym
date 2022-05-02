@@ -1,4 +1,4 @@
-package com.application.fitgym.activities.customer;
+package com.application.fitgym.misc;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,10 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.application.fitgym.activities.admin.AdminActivity;
-import com.application.fitgym.activities.admin.ManageNewCustomersActivity;
-import com.application.fitgym.helpers.GymApplication;
 import com.application.fitgym.R;
+import com.application.fitgym.activities.admin.AdminActivity;
+import com.application.fitgym.activities.customer.HomeActivity;
+import com.application.fitgym.helpers.GymApplication;
 import com.application.fitgym.helpers.UserInfo;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

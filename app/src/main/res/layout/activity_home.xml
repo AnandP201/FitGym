@@ -15,12 +15,16 @@
         android:id="@+id/customer_dashboard_toolbar"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/profile_card"
         android:layout_width="match_parent"
         app:cardElevation="8dp"
         app:cardUseCompatPadding="true"
+        android:clickable="true"
         app:cardCornerRadius="20dp"
+        android:foreground="?android:attr/selectableItemBackground"
         android:backgroundTint="@color/primaryTextColor"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="true">
 
         <include
             android:id="@+id/profile_summary"
@@ -56,7 +60,7 @@
                 android:textColor="@color/darkColor"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:text="Buy a basic plan to be a member"
+                android:text="Loading..."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
@@ -77,7 +81,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/darkColor"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:text="No add-ons purchased"
+                android:text="Loading..."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

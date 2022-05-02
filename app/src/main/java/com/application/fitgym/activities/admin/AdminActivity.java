@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.fitgym.R;
-import com.application.fitgym.activities.customer.LoginSignUpActivity;
+import com.application.fitgym.misc.LoginSignUpActivity;
 import com.application.fitgym.adapters.AdminMenuAdapter;
 import com.application.fitgym.helpers.dashboardItems.AdminDashMenuItems;
 import com.application.fitgym.helpers.GymApplication;

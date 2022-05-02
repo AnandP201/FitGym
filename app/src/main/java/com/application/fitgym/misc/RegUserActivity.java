@@ -1,4 +1,4 @@
-package com.application.fitgym.activities.customer;
+package com.application.fitgym.misc;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,10 +23,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.application.fitgym.helpers.GymApplication;
 import com.application.fitgym.ImageActionSheet;
 import com.application.fitgym.ImageUploadInterface;
 import com.application.fitgym.R;
+import com.application.fitgym.activities.customer.HomeActivity;
+import com.application.fitgym.helpers.GymApplication;
 import com.application.fitgym.helpers.UserInfo;
 import com.application.fitgym.models.customers;
 import com.application.fitgym.models.resources;

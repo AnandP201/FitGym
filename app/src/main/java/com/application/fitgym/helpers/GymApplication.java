@@ -24,5 +24,4 @@ public class GymApplication extends Application {
         super.onCreate();
         Realm.init(this);
     }
-
 }

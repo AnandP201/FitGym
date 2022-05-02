@@ -1,21 +1,19 @@
 package com.application.fitgym.activities.customer;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.application.fitgym.helpers.ProfileData;
+import com.application.fitgym.misc.LoginSignUpActivity;
 import com.application.fitgym.adapters.CustomersAdapter;
 
 import com.application.fitgym.helpers.dashboardItems.CustomerDashMenuItems;
@@ -33,6 +33,7 @@ import com.application.fitgym.R;
 
 import com.application.fitgym.models.customers;
 import com.application.fitgym.models.resources;
+import com.application.fitgym.models.status;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -40,8 +41,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmModel;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.User;
@@ -50,20 +49,26 @@ import io.realm.mongodb.sync.SyncConfiguration;
 public class HomeActivity extends AppCompatActivity{
 
     private App app;
-    private Toolbar toolbar;
+    Toolbar toolbar;
 
     customers currentCustomer;
     resources currentCustomerResource;
+    final static String NO_PLAN_PURCHASED="Buy a basic plan to be a member";
+    final static String NO_ADDON_PURCHASED="No add-ons purchased";
+    status currentStatus;
     private ImageView displayPictureImageView;
-    private boolean IS_MEMBER_FLAG=false;
-    private TextView uniqueIDTextView,unregisteredTextView,nameTextView;
-    private GridView cDashboardGridview;
+    private boolean IS_MEMBER=false;
+    private boolean IS_ACCEPTED=false;
+    TextView uniqueIDTextView,nameTextView,normalPlanTextView,addOnPlanTextView;
+    GridView cDashboardGridview;
     List<CustomerDashMenuItems> customerDashMenuItems;
-    private Realm customersRealm,resourcesRealm;
+    Realm customersRealm,resourcesRealm,statusRealm;
+    CardView cardView;
     private LinearLayout linearLayout;
 
-    private RealmResults<customers> customersRealmResults;
-    private RealmResults<resources> resourcesRealmResults;
+    RealmResults<customers> customersRealmResults;
+    RealmResults<resources> resourcesRealmResults;
+    RealmResults<status> statusRealmResults;
 
 
     
@@ -76,12 +81,14 @@ public class HomeActivity extends AppCompatActivity{
         app= GymApplication.getGlobalAppInstance();
         View view=findViewById(R.id.profile_summary);
 
+        cardView=findViewById(R.id.profile_card);
         linearLayout=findViewById(R.id.customer_home_layout);
         displayPictureImageView=view.findViewById(R.id.home_header_imageView);
-        unregisteredTextView=view.findViewById(R.id.underregistration_textview);
         uniqueIDTextView=view.findViewById(R.id.gym_uniqueID_textView);
         nameTextView=view.findViewById(R.id.name_welcome_textView);
         cDashboardGridview=findViewById(R.id.customer_dashboard_gridview);
+        normalPlanTextView=findViewById(R.id.membership_plan);
+        addOnPlanTextView=findViewById(R.id.addon_plans);
 
         customerDashMenuItems= Arrays.asList(CustomerDashMenuItems.dashBoardItems);
         CustomersAdapter customersAdapter=new CustomersAdapter(HomeActivity.this,customerDashMenuItems);
@@ -91,6 +98,53 @@ public class HomeActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Dashboard");
 
+        cardView.setOnClickListener(view1 -> {
+            String name=currentCustomer.getName();
+            String age=currentCustomer.getAge();
+            String gender=currentCustomer.getGender();
+            String memberSince=currentStatus.getMemberSince();
+            String activePlans=currentStatus.getActivePlans();
+            String gymID=currentStatus.getGymUserID();
+
+            ProfileData data=new ProfileData(name,gymID,memberSince,activePlans,age,gender,currentCustomerResource.getData());
+
+            View myview= LayoutInflater.from(this).inflate(R.layout.profile_card_dialog,null);
+
+            AlertDialog.Builder builder=new AlertDialog
+                    .Builder(this);
+
+
+            TextView nameText=myview.findViewById(R.id.profile_dialog_name_text);
+            TextView ageGenText=myview.findViewById(R.id.profile_dialog_age_gen_text);
+            TextView plansText=myview.findViewById(R.id.profile_dialog_plans_text);
+            TextView gymIDtext=myview.findViewById(R.id.profile_dialog_uniqueid_text);
+            TextView sinceText=myview.findViewById(R.id.profile_dialog_since_text);
+            ImageView profileImg=myview.findViewById(R.id.profile_dialog_image_view);
+
+
+            nameText.setText(data.getName());
+            ageGenText.setText(data.getAge()+","+data.getGender());
+            plansText.setText("Plans active : "+((data.getPlans().isEmpty())?"NA":data.getPlans()));
+            gymIDtext.setText((data.getGymID().isEmpty())?"NA":data.getGymID());
+            sinceText.setText("Member since : "+((data.getMembersince().isEmpty())?"NA":data.getMembersince()));
+            byte []b=data.getImageData();
+
+            Bitmap bitmap= BitmapFactory.decodeByteArray(b,0,b.length);
+            RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(),bitmap);
+            roundedBitmapDrawable.setCircular(true);
+            profileImg.setImageDrawable(roundedBitmapDrawable);
+
+            builder.setView(myview);
+            builder.setCancelable(true);
+
+
+
+            AlertDialog profileDialog=builder.create();
+
+            profileDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            profileDialog.show();
+
+        });
 
     }
 
@@ -113,6 +167,20 @@ public class HomeActivity extends AppCompatActivity{
                     .allowWritesOnUiThread(true)
                     .build());
             resourcesRealmResults=resourcesRealm.where(resources.class).equalTo("userID",app.currentUser().getId()).findAll();
+
+            statusRealm=Realm.getInstance(new SyncConfiguration
+                    .Builder(app.currentUser(),"members")
+                    .allowWritesOnUiThread(true)
+                    .allowQueriesOnUiThread(true)
+                    .build());
+            statusRealmResults=statusRealm.where(status.class).findAll();
+            currentStatus=statusRealmResults.where().equalTo("userAuthID",app.currentUser().getId()).findFirst();
+        }
+
+        if(currentStatus!=null){
+            statusRealm.executeTransaction(realm -> currentStatus.setStats("online"));
+            checkAndSetUserPlans();
+            uniqueIDTextView.setText(currentStatus.getGymUserID());
         }
 
         if(customersRealmResults.size()!=0){
@@ -122,13 +190,14 @@ public class HomeActivity extends AppCompatActivity{
             checkCurrentRegisteredStatus();
 
             if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("NA")){
-                showTextViewAsPerRegistration(0);
+                uniqueIDTextView.setText("Currently, you are under-registration");
             }
             else{
-                showTextViewAsPerRegistration(1);
+                if(currentStatus!=null){
+                    uniqueIDTextView.setText(currentStatus.getGymUserID());
+                }
             }
             setHeaderName();
-
         }
 
         if(resourcesRealmResults.size()!=0){
@@ -147,15 +216,15 @@ public class HomeActivity extends AppCompatActivity{
             if(currentCustomer!=null){
                 checkCurrentRegisteredStatus();
                 if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("NA")){
-                    showTextViewAsPerRegistration(0);
+                    uniqueIDTextView.setText("Currently, you are under-registration");
                 }
                 else{
-                    showTextViewAsPerRegistration(1);
-
+                    if(currentStatus!=null){
+                        uniqueIDTextView.setText(currentStatus.getGymUserID());
+                    }
                 }
             }
             setHeaderName();
-
         });
 
         resourcesRealmResults.addChangeListener(resources -> {
@@ -167,61 +236,94 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
 
+        statusRealmResults.addChangeListener(realm -> {
+            currentStatus=statusRealm
+                    .where(status.class)
+                    .equalTo("userAuthID",app.currentUser().getId())
+                    .findFirst();
+
+            if(currentStatus.getActivePlans().equalsIgnoreCase("")){
+                IS_MEMBER=false;
+            }else{
+                IS_MEMBER=true;
+            }
+
+            if(currentStatus.getStats().equalsIgnoreCase("offline")){
+                statusRealm.executeTransaction(realm1 -> {
+                    if(currentStatus!=null){
+                        currentStatus.setStats("online");
+                    }
+                });
+            }
+
+            uniqueIDTextView.setText(currentStatus.getGymUserID());
+            checkAndSetUserPlans();
+        });
 
 
-
+        View.OnClickListener snackBarListener= view->{
+            startActivity(new Intent(HomeActivity.this,CustomerPlansActivity.class).putExtra("title","Purchase plan"));
+        };
 
         cDashboardGridview.setOnItemClickListener((adapterView, view1, i, l) -> {
-            String action=customerDashMenuItems.get(i).getAction();
-            switch (action){
-                case "tasks":
-                    startActivity(new Intent(HomeActivity.this,TaskActivity.class));
-                    break;
-                case "plans":
-                    if(IS_MEMBER_FLAG){
-
-                    }else{
-                        Snackbar.make(this,linearLayout,"Membership required!", BaseTransientBottomBar.LENGTH_LONG).show();
-                    }
-                    break;
-                case "people":
-                    if(IS_MEMBER_FLAG){
-
-                    }else{
-                        Snackbar.make(this,linearLayout,"Membership required!", BaseTransientBottomBar.LENGTH_LONG).show();
-                    }
-                    break;
-                case "bills":
-                    if(IS_MEMBER_FLAG){
-
-                    }else {
-                        Snackbar.make(this, linearLayout, "Membership required!", BaseTransientBottomBar.LENGTH_LONG).show();
-                    }
+            closeRealms();
+            if(customerDashMenuItems.get(i).getAction().equalsIgnoreCase("tasks")){
+                startActivity(new Intent(this,TaskActivity.class));
+            }
+            else if (IS_ACCEPTED && IS_MEMBER) {
+                String action = customerDashMenuItems.get(i).getAction();
+                switch (action) {
+                    case "plans":
+                        startActivity(new Intent(this,CustomerPlansActivity.class));
                         break;
-                default:
-                    Toast.makeText(this, customerDashMenuItems.get(i).getAction(), Toast.LENGTH_SHORT).show();
+                    case "people":
+                        startActivity(new Intent(this,PeersActivity.class));
+                        break;
+                    case "bills":
+                        startActivity(new Intent(this,BillingActivity.class));
+                        break;
+                    default:
+                        Toast.makeText(this, customerDashMenuItems.get(i).getAction(), Toast.LENGTH_SHORT).show();
+                }
+            }else if(IS_ACCEPTED && !IS_MEMBER){
+                Snackbar.make(this,linearLayout,"Membership required!", BaseTransientBottomBar.LENGTH_LONG)
+                        .setAction("BUY PLAN",snackBarListener)
+                        .show();
+            }
+            else {
+                Snackbar.make(this,linearLayout,"Your registration needs approval.Please wait!", BaseTransientBottomBar.LENGTH_LONG)
+                        .show();
             }
         });
     }
 
+    private void checkAndSetUserPlans(){
+        String str=currentStatus.getActivePlans();
+
+        if(str.equalsIgnoreCase("")){
+            normalPlanTextView.setText(NO_PLAN_PURCHASED);
+            addOnPlanTextView.setText(NO_ADDON_PURCHASED);
+        }else if(str.contains("NP") && !str.contains("AP")){
+            int days=Integer.parseInt(currentStatus.getPlanActiveDuration())*30;
+            normalPlanTextView.setText(String.format("Membership Plan active. %d days left",days));
+            addOnPlanTextView.setText(NO_ADDON_PURCHASED);
+        }else if(str.contains("NP") && str.contains("AP")){
+            int days=Integer.parseInt(currentStatus.getPlanActiveDuration())*30;
+            normalPlanTextView.setText(String.format("Membership Plan active. %d days left",days));
+            addOnPlanTextView.setText("Add-ons active!");
+        }
+    }
+
+
     private void checkCurrentRegisteredStatus(){
 
         if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("OK")){
-            IS_MEMBER_FLAG=true;
-
+            IS_ACCEPTED=true;
         }else{
-            IS_MEMBER_FLAG=false;
-
+            IS_ACCEPTED=true;
         }
     }
 
-    private void switchActivity(Context context){
-        if(IS_MEMBER_FLAG){
-            startActivity(new Intent(this,context.getClass()));
-        }else{
-            Snackbar.make(this,linearLayout,"Membership required!", BaseTransientBottomBar.LENGTH_LONG).show();
-        }
-    }
 
     private void setHeaderName() {
         nameTextView.setText(String.format("Welcome, %s",currentCustomer.getName().split(" ")[0]));
@@ -237,20 +339,12 @@ public class HomeActivity extends AppCompatActivity{
     }
 
 
-    private void showTextViewAsPerRegistration(int i){
-        if(i==0){
-            unregisteredTextView.setVisibility(View.VISIBLE);
-            if(uniqueIDTextView.getVisibility()==View.VISIBLE){
-                uniqueIDTextView.setVisibility(View.INVISIBLE);
-            }
-        }
-        else{
-            uniqueIDTextView.setVisibility(View.VISIBLE);
-            if(unregisteredTextView.getVisibility()==View.VISIBLE){
-                unregisteredTextView.setVisibility(View.INVISIBLE);
-            }
-        }
+    private void closeRealms(){
+        statusRealm.close();
+        customersRealm.close();
+        resourcesRealm.close();
     }
+
 
 public void showToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
@@ -265,6 +359,7 @@ public void showToast(String msg){
     }
 
     public void logout(){
+        statusRealm.executeTransaction(realm -> currentStatus.setStats("offline"));
         if(app.currentUser()!=null){
             User user=app.currentUser();
             user.logOutAsync(response->{
@@ -298,8 +393,22 @@ public void showToast(String msg){
         }
     }
 
-    private void buyMembership() {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        statusRealmResults.removeAllChangeListeners();
+        statusRealm.executeTransaction(realm -> currentStatus.setStats("offline"));
+
+
+        customersRealmResults.removeAllChangeListeners();
+        resourcesRealmResults.removeAllChangeListeners();
+
+
+        closeRealms();
     }
+
+    private void buyMembership() { }
 
     private void aboutUs() {
         showToast("About Us");
@@ -307,13 +416,5 @@ public void showToast(String msg){
 
     private void resetPassword() {
     showToast("Password reset!");
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        resourcesRealm.close();
-        customersRealm.close();
     }
 }

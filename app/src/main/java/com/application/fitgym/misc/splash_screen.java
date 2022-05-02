@@ -1,4 +1,4 @@
-package com.application.fitgym.activities;
+package com.application.fitgym.misc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.fitgym.R;
-import com.application.fitgym.activities.admin.AdminActivity;
-import com.application.fitgym.activities.customer.LoginSignUpActivity;
 
 public class splash_screen extends AppCompatActivity {
 
