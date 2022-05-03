@@ -22,9 +22,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.customer.TaskActivity"
-            android:exported="true"
-            android:noHistory="false"
-            android:parentActivityName=".activities.customer.HomeActivity" />
+            android:exported="true" />
         <activity
             android:name=".activities.admin.ManageNewCustomersActivity"
             android:exported="false" />

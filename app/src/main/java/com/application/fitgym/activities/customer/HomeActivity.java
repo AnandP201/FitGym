@@ -194,7 +194,7 @@ public class HomeActivity extends AppCompatActivity{
             }
             else{
                 if(currentStatus!=null){
-                    uniqueIDTextView.setText(currentStatus.getGymUserID());
+                    uniqueIDTextView.setText("Fitgym ID: "+currentStatus.getGymUserID());
                 }
             }
             setHeaderName();
@@ -256,7 +256,7 @@ public class HomeActivity extends AppCompatActivity{
                 });
             }
 
-            uniqueIDTextView.setText(currentStatus.getGymUserID());
+            uniqueIDTextView.setText("Fitgym ID: "+currentStatus.getGymUserID());
             checkAndSetUserPlans();
         });
 

@@ -36,7 +36,7 @@
             android:fontFamily="@font/quicksand_medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/darkColor"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:paddingStart="15dp"
             android:padding="6dp"
             android:text="Loading...."
