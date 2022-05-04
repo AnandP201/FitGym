@@ -227,7 +227,7 @@ public class ManageNewCustomersActivity extends AppCompatActivity implements App
         statusRealm.executeTransaction(realm->{
             s.set_partition();
             s.setUserAuthID(current.getAuthID());
-            s.setPlanActiveDuration("");
+            s.setPlanActiveDuration("0");
             s.setActivePlans("");
             s.setGymUserID(toStore);
             s.setStats("offline");

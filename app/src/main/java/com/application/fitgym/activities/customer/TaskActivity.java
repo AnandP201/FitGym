@@ -61,7 +61,6 @@ public class TaskActivity extends AppCompatActivity {
     private AlertDialog inputTaskDialog;
     private TextView createdOnTimeStampText,input_title,input_description,noTaskDisplayText;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +79,6 @@ public class TaskActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.taskact_app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Daily notes/tasks");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         taskList=taskRealm.where(tasks.class).contains("userID",user.getId()).findAll();
         taskInputView=getLayoutInflater().inflate(R.layout.task_input_layout,null);

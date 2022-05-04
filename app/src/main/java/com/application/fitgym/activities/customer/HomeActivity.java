@@ -179,6 +179,11 @@ public class HomeActivity extends AppCompatActivity{
 
         if(currentStatus!=null){
             statusRealm.executeTransaction(realm -> currentStatus.setStats("online"));
+            if(currentStatus.getActivePlans().equalsIgnoreCase("")){
+                IS_MEMBER=false;
+            }else{
+                IS_MEMBER=true;
+            }
             checkAndSetUserPlans();
             uniqueIDTextView.setText(currentStatus.getGymUserID());
         }

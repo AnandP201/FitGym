@@ -12,6 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.application.fitgym.BuyPlanInterface;
 import com.application.fitgym.R;
 import com.application.fitgym.models.plans;
+import com.application.fitgym.models.status;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -19,11 +24,13 @@ import io.realm.RealmResults;
 public class PacksAdapters extends RecyclerView.Adapter<PacksAdapters.PackViewHolder> {
 
     RealmResults<plans> plansList;
+    status current;
     BuyPlanInterface clickInterface;
 
-    public PacksAdapters(RealmResults<plans> paramList,BuyPlanInterface paramInterface){
+    public PacksAdapters(RealmResults<plans> paramList,BuyPlanInterface paramInterface,status param){
         this.plansList=paramList;
         this.clickInterface=paramInterface;
+        this.current=param;
     }
 
 
@@ -42,12 +49,25 @@ public class PacksAdapters extends RecyclerView.Adapter<PacksAdapters.PackViewHo
 
     @Override
     public void onBindViewHolder(@NonNull PackViewHolder holder, int position) {
+        String ids=current.getActivePlans();
+        List<String> list=new ArrayList<>();
+
+        if(!ids.isEmpty()){
+            list.addAll(Arrays.asList(ids.substring(1,ids.length()-1).split(", ")));
+        }
+
             plans current=plansList.get(position);
 
             holder.planName.setText(current.getTitle());
             holder.planDesc.setText(current.getDescription());
             holder.planDuration.setText(String.format("%s months validity",current.getDuration()));
-            holder.planPrice.setText(String.format("₹ %s /-",current.getPrice()));
+             holder.planPrice.setText(String.format("₹ %s /-",current.getPrice()));
+            if(list.contains(current.getPlanID())){
+                holder.buyPackBtn.setText("PLAN ACTIVE");
+                holder.buyPackBtn.setBackgroundResource(android.R.color.darker_gray);
+                holder.buyPackBtn.setEnabled(false);
+            }
+
     }
 
 
