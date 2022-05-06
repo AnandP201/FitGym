@@ -24,13 +24,13 @@ import io.realm.RealmResults;
 public class PacksAdapters extends RecyclerView.Adapter<PacksAdapters.PackViewHolder> {
 
     RealmResults<plans> plansList;
-    status current;
+    status stats;
     BuyPlanInterface clickInterface;
 
     public PacksAdapters(RealmResults<plans> paramList,BuyPlanInterface paramInterface,status param){
         this.plansList=paramList;
         this.clickInterface=paramInterface;
-        this.current=param;
+        this.stats=param;
     }
 
 
@@ -49,7 +49,7 @@ public class PacksAdapters extends RecyclerView.Adapter<PacksAdapters.PackViewHo
 
     @Override
     public void onBindViewHolder(@NonNull PackViewHolder holder, int position) {
-        String ids=current.getActivePlans();
+        String ids=stats.getActivePlans();
         List<String> list=new ArrayList<>();
 
         if(!ids.isEmpty()){
@@ -60,8 +60,9 @@ public class PacksAdapters extends RecyclerView.Adapter<PacksAdapters.PackViewHo
 
             holder.planName.setText(current.getTitle());
             holder.planDesc.setText(current.getDescription());
-            holder.planDuration.setText(String.format("%s months validity",current.getDuration()));
-             holder.planPrice.setText(String.format("₹ %s /-",current.getPrice()));
+            holder.planDuration.setText(String.format("%s days validity",current.getDuration()));
+            holder.planPrice.setText(String.format("₹ %s /-",current.getPrice()));
+
             if(list.contains(current.getPlanID())){
                 holder.buyPackBtn.setText("PLAN ACTIVE");
                 holder.buyPackBtn.setBackgroundResource(android.R.color.darker_gray);

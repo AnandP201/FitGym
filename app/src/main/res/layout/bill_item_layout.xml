@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:background="@color/primaryTextColor"
+        android:backgroundTint="@color/primaryTextColor"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="10"
+            android:padding="8dp"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="8"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/bill_invoice_text"
+                    android:layout_width="match_parent"
+                    android:textStyle="italic"
+                    android:textColor="@color/common_google_signin_btn_text_light"
+                    android:padding="4dp"
+                    android:fontFamily="@font/quicksand_regular"
+                    android:text="c612a0c1-93a2-447d-876b-9ff40deabd80"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/bill_title_text"
+                    android:layout_width="match_parent"
+                    android:padding="4dp"
+                    android:textColor="@color/darkColor"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/quicksand_regular"
+                    android:text="Normal Membership purchased"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/bill_for_text"
+                    android:layout_width="match_parent"
+                    android:padding="4dp"
+                    android:textColor="@color/darkColor"
+                    android:fontFamily="@font/quicksand_regular"
+                    android:text="Bill For : FGM101"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/bill_createdOn_text"
+                    android:layout_width="match_parent"
+                    android:padding="4dp"
+                    android:textColor="@color/darkColor"
+                    android:fontFamily="@font/quicksand_regular"
+                    android:text="Issued On : Wed 05 22 13:26:11"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bill_amount_text"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:padding="2dp"
+                android:shadowColor="@color/darkColor"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textColor="@color/secondaryDarkColor"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="₹ 600"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

@@ -12,4 +12,5 @@
     <style name="ToolbarTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="fontFamily">@font/catamaran_regular</item>
     </style>
+
 </resources>

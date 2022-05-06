@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ import com.application.fitgym.models.customers;
 import com.application.fitgym.models.payments;
 import com.application.fitgym.models.plans;
 import com.application.fitgym.models.status;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.bson.Document;
 
@@ -32,6 +35,7 @@ import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.User;
@@ -44,6 +48,7 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
 
     Toolbar toolbar;
     RecyclerView recyclerView;
+    String TAG;
     App app;
     User user;
     Realm plansRealm,customerRealm,billsRealm,statusRealm;
@@ -52,6 +57,7 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
     RealmResults<customers> customerList;
     RealmChangeListener<RealmResults<plans>> listener;
     ProgressBar progressBar;
+    View mainView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +65,16 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
         toolbar=findViewById(R.id.customer_plans_activity_toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("My Plans");
+        TAG=getIntent().getStringExtra("title");
 
+        if(TAG==null) {
+            getSupportActionBar().setTitle("MY PLANS");
+        }else{
+            getSupportActionBar().setTitle(TAG);
+        }
+
+
+        mainView=findViewById(R.id.customer_plans_main_layout);
         progressBar=findViewById(R.id.customer_plans_loading_bar);
         recyclerView=findViewById(R.id.customer_plans_recycler_view);
         StaggeredGridLayoutManager staggeredGridLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
@@ -110,30 +124,30 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
             recyclerView.setAdapter(packsAdapters);
         }
 
+
         listener= res->{
            refresh();
         };
+
         plansList.addChangeListener(listener);
+    }
+
+    private void addListenerToMember(){
+        currentMember.addChangeListener(realmModel -> {
+            refresh();
+        });
     }
 
     private void refresh(){
         progressBar.setVisibility(View.INVISIBLE);
         currentMember=statusRealm.where(status.class).equalTo("userAuthID",user.getId()).findFirst();
+        if(currentMember!=null){
+            currentMember.removeAllChangeListeners();
+            addListenerToMember();
+        }
         plansList=plansRealm.where(plans.class).findAll();
         PacksAdapters packsAdapters=new PacksAdapters(plansList,this,currentMember);
         recyclerView.setAdapter(packsAdapters);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        customerRealm.close();
-        plansList.removeChangeListener(listener);
-
-        plansRealm.close();
-        billsRealm.close();
-        statusRealm.close();
     }
 
 
@@ -142,19 +156,32 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
         super.onPause();
 
         customerRealm.close();
+        currentMember.removeAllChangeListeners();
         plansList.removeChangeListener(listener);
+        plansRealm.close();
+        billsRealm.close();
+        statusRealm.close();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        customerRealm.close();
         plansRealm.close();
         billsRealm.close();
         statusRealm.close();
     }
+
+
 
     private void modifyStatusPlans(String planID, status curr, String planDuration){
         String plans=curr.getActivePlans();
         if(plans.isEmpty()){
             statusRealm.executeTransaction(realm -> {
                 curr.setActivePlans(String.format("[%s]",planID));
-                String duration=String.valueOf(Integer.parseInt(curr.getPlanActiveDuration())+Integer.parseInt(planDuration));
+                String duration=String.valueOf(Integer.parseInt(curr.getPlanActiveDuration())+(Integer.parseInt(planDuration)));
                 curr.setPlanActiveDuration(duration);
             });
         }
@@ -165,7 +192,7 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
             list.add(planID);
             statusRealm.executeTransaction(realm -> {
                 curr.setActivePlans(list.toString());
-                String duration=String.valueOf(Integer.parseInt(curr.getPlanActiveDuration())+Integer.parseInt(planDuration));
+                String duration=String.valueOf(Integer.parseInt(curr.getPlanActiveDuration())+(Integer.parseInt(planDuration)));
                 curr.setPlanActiveDuration(duration);
             });
         }
@@ -175,8 +202,17 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
     @Override
     public void buyPlan(int position) {
 
-        payments payment=new payments();
+
+
         status current=statusRealm.where(status.class).equalTo("userAuthID",user.getId()).findFirst();
+        String toBuyPlanID=plansList.get(position).getPlanID();
+
+        if(!current.getActivePlans().contains("NP") && toBuyPlanID.contains("AP")){
+            Snackbar.make(mainView,"Can't buy an add-on plan without an active basic plan. Buy a basic 1 or 4 months plan", BaseTransientBottomBar.LENGTH_LONG).show();
+            return;
+        }
+
+        payments payment=new payments();
         billsRealm.executeTransaction(realm -> {
             payment.set_partition();
             payment.setBillAmount(plansList.get(position).getPrice());
@@ -196,6 +232,8 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
         startActivity(new Intent(this,HomeActivity.class));
         finish();
         Toast.makeText(this, "Plan "+plansList.get(position).getPlanID()+" purchased!", Toast.LENGTH_SHORT).show();
+
+
     }
 
 

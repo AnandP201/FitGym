@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
@@ -64,7 +65,9 @@ public class HomeActivity extends AppCompatActivity{
     List<CustomerDashMenuItems> customerDashMenuItems;
     Realm customersRealm,resourcesRealm,statusRealm;
     CardView cardView;
+    String ID;
     private LinearLayout linearLayout;
+
 
     RealmResults<customers> customersRealmResults;
     RealmResults<resources> resourcesRealmResults;
@@ -185,7 +188,6 @@ public class HomeActivity extends AppCompatActivity{
                 IS_MEMBER=true;
             }
             checkAndSetUserPlans();
-            uniqueIDTextView.setText(currentStatus.getGymUserID());
         }
 
         if(customersRealmResults.size()!=0){
@@ -199,6 +201,7 @@ public class HomeActivity extends AppCompatActivity{
             }
             else{
                 if(currentStatus!=null){
+                    ID=currentStatus.getGymUserID();
                     uniqueIDTextView.setText("Fitgym ID: "+currentStatus.getGymUserID());
                 }
             }
@@ -248,8 +251,10 @@ public class HomeActivity extends AppCompatActivity{
                     .findFirst();
 
             if(currentStatus.getActivePlans().equalsIgnoreCase("")){
+
                 IS_MEMBER=false;
             }else{
+
                 IS_MEMBER=true;
             }
 
@@ -261,13 +266,14 @@ public class HomeActivity extends AppCompatActivity{
                 });
             }
 
+            ID=currentStatus.getGymUserID();
             uniqueIDTextView.setText("Fitgym ID: "+currentStatus.getGymUserID());
             checkAndSetUserPlans();
         });
 
 
         View.OnClickListener snackBarListener= view->{
-            startActivity(new Intent(HomeActivity.this,CustomerPlansActivity.class).putExtra("title","Purchase plan"));
+            startActivity(new Intent(HomeActivity.this,CustomerPlansActivity.class).putExtra("title","Purchase Plan"));
         };
 
         cDashboardGridview.setOnItemClickListener((adapterView, view1, i, l) -> {
@@ -285,7 +291,11 @@ public class HomeActivity extends AppCompatActivity{
                         startActivity(new Intent(this,PeersActivity.class));
                         break;
                     case "bills":
-                        startActivity(new Intent(this,BillingActivity.class));
+                        if(currentCustomer!=null){
+                            startActivity(new Intent(this,BillingActivity.class).putExtra("ID",ID));
+                        }else{
+                            Toast.makeText(HomeActivity.this,"Please wait! Data is loading....",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     default:
                         Toast.makeText(this, customerDashMenuItems.get(i).getAction(), Toast.LENGTH_SHORT).show();
@@ -309,11 +319,11 @@ public class HomeActivity extends AppCompatActivity{
             normalPlanTextView.setText(NO_PLAN_PURCHASED);
             addOnPlanTextView.setText(NO_ADDON_PURCHASED);
         }else if(str.contains("NP") && !str.contains("AP")){
-            int days=Integer.parseInt(currentStatus.getPlanActiveDuration())*30;
+            int days=Integer.parseInt(currentStatus.getPlanActiveDuration());
             normalPlanTextView.setText(String.format("Membership Plan active. %d days left",days));
             addOnPlanTextView.setText(NO_ADDON_PURCHASED);
         }else if(str.contains("NP") && str.contains("AP")){
-            int days=Integer.parseInt(currentStatus.getPlanActiveDuration())*30;
+            int days=Integer.parseInt(currentStatus.getPlanActiveDuration());
             normalPlanTextView.setText(String.format("Membership Plan active. %d days left",days));
             addOnPlanTextView.setText("Add-ons active!");
         }
@@ -391,8 +401,6 @@ public void showToast(String msg){
                 return true;
             case R.id.aboutus_item:
                 aboutUs();
-            case R.id.member_buy:
-                buyMembership();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -412,8 +420,6 @@ public void showToast(String msg){
 
         closeRealms();
     }
-
-    private void buyMembership() { }
 
     private void aboutUs() {
         showToast("About Us");

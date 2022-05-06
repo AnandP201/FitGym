@@ -32,6 +32,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/drawable/ic_music_switch_on_off_button.xml" value="0.232" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/drawable/ic_wave.xml" value="0.246" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/drawable/login_signup_img.xml" value="0.257" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/drawable/spinner_background.xml" value="0.2575" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/drawable/wave_background.xml" value="0.246" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/font/font_main.xml" value="0.284375" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/activity_admin.xml" value="0.22592592592592592" />
@@ -53,6 +54,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/admin_logout_confirmation_dialog.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/admin_plan_item.xml" value="0.2" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/app_bar.xml" value="0.22592592592592592" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/bill_item_layout.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/customer_item_layout.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/dashboard_menu_cards.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/dp_layout.xml" value="0.22592592592592592" />
@@ -71,6 +73,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/plans_item_layout.xml" value="0.264" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/profile_card_dialog.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/snack_bar_layout.xml" value="0.22592592592592592" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/spinner_item.xml" value="0.264" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/task_card_layout.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/task_input_layout.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FitGym/app/src/main/res/layout/yes_no_confirmation_dialog.xml" value="0.22592592592592592" />

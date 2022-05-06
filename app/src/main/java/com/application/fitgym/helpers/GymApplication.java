@@ -1,6 +1,10 @@
 package com.application.fitgym.helpers;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.ContextParams;
+
+import androidx.annotation.NonNull;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;

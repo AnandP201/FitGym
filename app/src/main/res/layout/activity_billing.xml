@@ -11,6 +11,131 @@
         android:id="@+id/billing_activity_toolbar"
         layout="@layout/app_bar"/>
 
+    <LinearLayout
+        android:id="@+id/customer_bill_filter_layout"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/customer_bill_add_filter_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:buttonTint="@color/secondaryDarkColor"
+                android:fontFamily="@font/quicksand_medium"
+                android:padding="4dp"
+                android:text="Filter"
+                android:textSize="14sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <RadioGroup
+                        android:id="@+id/customer_bill_filter_rg"
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_height="match_parent">
+                        <RadioButton
+                            android:id="@+id/old_first_radio"
+                            android:layout_width="wrap_content"
+                            android:buttonTint="@color/secondaryDarkColor"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/quicksand_regular"
+                            android:text="Older first"
+                            android:layout_height="match_parent"/>
+                        <RadioButton
+                            android:id="@+id/new_first_radio"
+                            android:layout_width="wrap_content"
+                            android:textSize="12sp"
+                            android:buttonTint="@color/secondaryDarkColor"
+                            android:fontFamily="@font/quicksand_regular"
+                            android:text="Newest first"
+                            android:layout_height="match_parent"/>
+                    </RadioGroup>
+                    <Spinner
+                        android:id="@+id/month_spinner_select"
+                        android:layout_width="match_parent"
+                        android:spinnerMode="dialog"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/customer_bill_no_filter_text"
+                    android:gravity="center"
+                    android:fontFamily="@font/quicksand_regular"
+                    android:layout_width="match_parent"
+                    android:textColor="?android:attr/colorForeground"
+                    android:text="No filters applied"
+                    android:layout_height="match_parent"/>
+            </FrameLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:padding="4dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="Total Expense "
+                android:gravity="start"
+                android:padding="2dp"
+                android:textColor="?android:attr/colorForeground"
+                android:fontFamily="@font/quicksand_medium"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/customer_bill_total_amount"
+                android:padding="2dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="?android:attr/colorForeground"
+                android:fontFamily="@font/catamaran_regular"
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/customer_bill_extra_info_layout"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:padding="4dp"
+            android:weightSum="10"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/customer_bill_extra_info_title"
+                android:text="Expense in month"
+                android:gravity="start"
+                android:padding="2dp"
+                android:layout_weight="4"
+                android:textColor="?android:attr/colorForeground"
+                android:fontFamily="@font/quicksand_medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/customer_bill_monthly_amount"
+                android:padding="2dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_weight="6"
+                android:textColor="?android:attr/colorForeground"
+                android:fontFamily="@font/quicksand_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,9 +144,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <ProgressBar
+            android:id="@+id/customer_bill_loading_bar"
             android:layout_width="match_parent"
             android:indeterminateTint="@color/secondaryDarkColor"
             android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/customer_bill_loading_text"
+            android:fontFamily="@font/quicksand_regular"
+            android:text="Loading bills...."
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </FrameLayout>
 </LinearLayout>

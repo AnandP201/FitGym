@@ -60,8 +60,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             holder.descT.setText(t.getDescription());
             holder.createdOnT.setText(t.getCreatedOn());
 
-        Animation animation=AnimationUtils.loadAnimation(c, android.R.anim.slide_in_left);
-        holder.itemView.setAnimation(animation);
 
     }
 
