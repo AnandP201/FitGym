@@ -173,8 +173,6 @@ public class ManageInventoryActivity extends AppCompatActivity {
                 TextView tv=(TextView) view;
                 if(position==0){
                     tv.setTextColor(Color.GRAY);
-                }else{
-                    tv.setTextColor(getResources().getColor(R.color.secondaryDarkColor));
                 }
                 return view;
             }
@@ -391,7 +389,7 @@ public class ManageInventoryActivity extends AppCompatActivity {
         NumberFormat formatter=NumberFormat.getCurrencyInstance(new Locale("en","IN"));
         String moneyString=formatter.format(amount);
 
-        return moneyString.substring(2);
+        return moneyString.substring(1);
     }
 
     class FetchBills extends AsyncTask<Void,Void,List<Bill>>
@@ -454,12 +452,10 @@ public class ManageInventoryActivity extends AppCompatActivity {
 
                 adapter.setDropDownViewResource(R.layout.spinner_item);
 
-
-
                 totalBillAmountText.setText("₹ "+formatCurrency(money));
 
                 usersListSpinner.setAdapter(adapter);
-                usersListSpinner.setSelection(2);
+                usersListSpinner.setSelection(idList.indexOf("ALL"));
             });
             return tempList;
         }

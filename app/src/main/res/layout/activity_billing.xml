@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorPrimary"
     android:orientation="vertical"
     tools:context=".activities.customer.CustomerPlansActivity">
 
@@ -96,9 +97,8 @@
                 android:padding="2dp"
                 android:gravity="center"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 android:textColor="?android:attr/colorForeground"
-                android:fontFamily="@font/catamaran_regular"
+                android:fontFamily="@font/quicksand_medium"
                 android:layout_width="0dp"
                 android:layout_weight="6"
                 android:layout_height="wrap_content"/>

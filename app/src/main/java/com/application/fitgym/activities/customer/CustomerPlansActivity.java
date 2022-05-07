@@ -158,10 +158,10 @@ public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanI
         customerRealm.close();
         currentMember.removeAllChangeListeners();
         plansList.removeChangeListener(listener);
+
         plansRealm.close();
         billsRealm.close();
         statusRealm.close();
-
     }
 
     @Override

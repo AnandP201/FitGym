@@ -19,6 +19,7 @@
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/profile_dialog_image_view"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_width="100dp"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_account_circle"

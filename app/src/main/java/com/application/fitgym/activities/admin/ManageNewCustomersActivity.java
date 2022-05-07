@@ -246,8 +246,9 @@ public class ManageNewCustomersActivity extends AppCompatActivity implements App
 
     @Override
     public void approveCustomer(int position) {
-        this.authID=customerRealmResults.get(position).getAuthID();
-        dialogCustomerInfo.setText(String.format("Actions for : %s ",customerRealmResults.get(position).getName()));
+        RealmResults<customers> filteredRes=customerRealmResults.where().contains("RegistrationStatus","NA").findAll();
+        this.authID=filteredRes.get(position).getAuthID();
+        dialogCustomerInfo.setText(String.format("Actions for : %s ",filteredRes.get(position).getName()));
         confirmCustomerDialog.show();
     }
 

@@ -227,9 +227,6 @@ public class BillingActivity extends AppCompatActivity {
                 monthSpinner.setVisibility(View.VISIBLE);
 
             }else{
-                currentList.addAll(mainList);
-                adapter=new BillsAdapter(currentList);
-                recyclerView.setAdapter(adapter);
                 if(extraInfoLayout.getVisibility()==View.VISIBLE){
                     extraInfoLayout.setVisibility(View.GONE);
                 }
@@ -265,7 +262,7 @@ public class BillingActivity extends AppCompatActivity {
         NumberFormat formatter=NumberFormat.getCurrencyInstance(new Locale("en","IN"));
         String moneyString=formatter.format(amount);
 
-        return moneyString.substring(2);
+        return moneyString.substring(1);
     }
 
     class BillAscComparator implements Comparator<Bill> {

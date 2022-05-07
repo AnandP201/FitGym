@@ -73,7 +73,10 @@ public class ToRegisterCustomersAdapter extends RecyclerView.Adapter<ToRegisterC
         customers currC=customersList.get(position);
         resources r=resourcesList.where().beginsWith("userID",currC.getAuthID()).findFirst();
 
-        byte []b=r.getData();
+        byte b[] = new byte[0];
+        if(r!=null){
+            b=r.getData();
+        }
 
         if(b.length!=0){
             Bitmap bitmap= BitmapFactory.decodeByteArray(b,0,b.length);
