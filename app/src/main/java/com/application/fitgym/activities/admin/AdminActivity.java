@@ -1,10 +1,12 @@
 package com.application.fitgym.activities.admin;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,9 +21,9 @@ import com.application.fitgym.misc.LoginSignUpActivity;
 import com.application.fitgym.adapters.AdminMenuAdapter;
 import com.application.fitgym.helpers.dashboardItems.AdminDashMenuItems;
 import com.application.fitgym.helpers.GymApplication;
-import com.application.fitgym.models.admin;
-import com.application.fitgym.models.customers;
-import com.application.fitgym.models.plans;
+import com.application.fitgym.models.RealmModels.admin;
+import com.application.fitgym.models.RealmModels.customers;
+import com.application.fitgym.models.RealmModels.plans;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +56,7 @@ public class AdminActivity extends AppCompatActivity {
     private SyncConfiguration adminSyncConfigurationFile,customerSyncConfigurationFile,plansSyncConfigurationFile;
     private TextView adminLogoutCancelView,adminLogoutView,adminNameTextView,totalCustomersCountTextView,newRegistrationCountTextView,plansCountTextView;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,7 +193,6 @@ public class AdminActivity extends AppCompatActivity {
         plansList.addChangeListener(plansCountListener);
         adminList.addChangeListener(adminRealmListener);
     }
-
 
     private void setPlansCount() {
         plansList=plansRealm.where(plans.class).findAll();

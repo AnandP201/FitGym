@@ -13,13 +13,11 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
@@ -28,9 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.fitgym.R;
-import com.application.fitgym.activities.admin.ManageInventoryActivity;
 import com.application.fitgym.adapters.BillsAdapter;
-import com.application.fitgym.helpers.Bill;
+import com.application.fitgym.models.CustomModels.Bill;
 import com.application.fitgym.helpers.GymApplication;
 
 import org.bson.Document;

@@ -6,8 +6,6 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,12 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.fitgym.MemberDetailsInterface;
 import com.application.fitgym.R;
-import com.application.fitgym.models.customers;
-import com.application.fitgym.models.resources;
-import com.application.fitgym.models.status;
+import com.application.fitgym.models.RealmModels.customers;
+import com.application.fitgym.models.RealmModels.resources;
+import com.application.fitgym.models.RealmModels.status;
 
 
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 

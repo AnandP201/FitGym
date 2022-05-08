@@ -13,5 +13,85 @@
         layout="@layout/app_bar"
         android:id="@+id/admin_managecust_toolbar"/>
 
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:orientation="horizontal"
+       android:padding="4dp"
+       android:weightSum="10"
+       android:layout_height="wrap_content">
+
+       <androidx.appcompat.widget.SwitchCompat
+           android:id="@+id/switch1"
+           android:layout_width="0dp"
+           android:fontFamily="@font/quicksand_medium"
+           android:layout_weight="3"
+           app:thumbTint="@color/secondaryDarkColor"
+           android:layout_height="match_parent"
+           android:text="Filter" />
+
+       <EditText
+           android:id="@+id/filter_text"
+           android:layout_width="0dp"
+           android:inputType="text"
+           android:layout_weight="5"
+           android:fontFamily="@font/quicksand_regular"
+           android:textAlignment="center"
+           android:hint="Enter gym id.."
+           android:layout_height="wrap_content"/>
+       <Button
+           android:id="@+id/search_cust_filter"
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:paddingStart="30dp"
+           android:backgroundTint="@color/secondaryDarkColor"
+           android:layout_weight="2"
+           android:drawableTint="@color/primaryTextColor"
+           android:drawableStart="@drawable/ic_baseline_search_24"
+           />
+
+   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/manage_cust_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/reload_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/primaryTextColor"
+                android:text="RELOAD LIST"
+                android:backgroundTint="@color/secondaryDarkColor"
+                android:drawableTint="@color/primaryTextColor"
+                />
+            <ProgressBar
+                android:id="@+id/manage_cust_loading"
+                android:indeterminateTint="@color/secondaryDarkColor"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/manage_cust_loading_text"
+                android:text="Loading customers...."
+                android:fontFamily="@font/quicksand_regular"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textColor="?android:attr/colorForeground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

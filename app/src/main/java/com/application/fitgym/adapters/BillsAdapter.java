@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.fitgym.R;
-import com.application.fitgym.helpers.Bill;
+import com.application.fitgym.models.CustomModels.Bill;
 
 import java.util.List;
 

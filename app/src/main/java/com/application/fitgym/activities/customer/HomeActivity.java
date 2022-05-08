@@ -1,7 +1,6 @@
 package com.application.fitgym.activities.customer;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,23 +9,17 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 
-import android.app.Service;
-import android.content.AsyncQueryHandler;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,7 +28,7 @@ import android.widget.Toast;
 
 import com.application.fitgym.ImageActionSheet;
 import com.application.fitgym.ImageUploadInterface;
-import com.application.fitgym.helpers.ProfileData;
+import com.application.fitgym.models.CustomModels.ProfileData;
 import com.application.fitgym.misc.LoginSignUpActivity;
 import com.application.fitgym.adapters.CustomersAdapter;
 
@@ -43,10 +36,8 @@ import com.application.fitgym.helpers.dashboardItems.CustomerDashMenuItems;
 import com.application.fitgym.helpers.GymApplication;
 import com.application.fitgym.R;
 
-import com.application.fitgym.models.customers;
-import com.application.fitgym.models.resources;
-import com.application.fitgym.models.status;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.application.fitgym.models.RealmModels.customers;
+import com.application.fitgym.models.RealmModels.resources;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -61,7 +52,6 @@ import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
-import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;

@@ -1,23 +1,16 @@
 package com.application.fitgym.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.fitgym.PlanEditInterface;
 import com.application.fitgym.R;
-import com.application.fitgym.models.plans;
+import com.application.fitgym.models.RealmModels.plans;
 
 import io.realm.RealmResults;
 

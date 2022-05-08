@@ -1,43 +1,25 @@
 package com.application.fitgym.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.fitgym.ApproveCustomerInterface;
 import com.application.fitgym.R;
-import com.application.fitgym.models.admin;
-import com.application.fitgym.models.customers;
-import com.application.fitgym.models.resources;
-import com.application.fitgym.models.status;
+import com.application.fitgym.models.RealmModels.customers;
+import com.application.fitgym.models.RealmModels.resources;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
-import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
-import io.realm.mongodb.User;
-import io.realm.mongodb.sync.SyncConfiguration;
 
 public class ToRegisterCustomersAdapter extends RecyclerView.Adapter<ToRegisterCustomersAdapter.CustomerItemViewHolder> {
 

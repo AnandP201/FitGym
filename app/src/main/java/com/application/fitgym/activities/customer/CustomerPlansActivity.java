@@ -6,9 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,14 +15,12 @@ import com.application.fitgym.BuyPlanInterface;
 import com.application.fitgym.R;
 import com.application.fitgym.adapters.PacksAdapters;
 import com.application.fitgym.helpers.GymApplication;
-import com.application.fitgym.models.customers;
-import com.application.fitgym.models.payments;
-import com.application.fitgym.models.plans;
-import com.application.fitgym.models.status;
+import com.application.fitgym.models.RealmModels.customers;
+import com.application.fitgym.models.RealmModels.payments;
+import com.application.fitgym.models.RealmModels.plans;
+import com.application.fitgym.models.RealmModels.status;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.bson.Document;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,13 +31,9 @@ import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
-import io.realm.RealmModel;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.User;
-import io.realm.mongodb.mongo.MongoClient;
-import io.realm.mongodb.mongo.MongoCollection;
-import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 public class CustomerPlansActivity extends AppCompatActivity implements BuyPlanInterface {

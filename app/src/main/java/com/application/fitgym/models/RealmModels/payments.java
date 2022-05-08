@@ -1,4 +1,4 @@
-package com.application.fitgym.models;
+package com.application.fitgym.models.RealmModels;
 
 import org.bson.types.ObjectId;
 import io.realm.RealmObject;

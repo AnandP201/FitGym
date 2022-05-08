@@ -3,7 +3,6 @@ package com.application.fitgym.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,14 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.fitgym.BuyPlanInterface;
 import com.application.fitgym.R;
-import com.application.fitgym.models.plans;
-import com.application.fitgym.models.status;
+import com.application.fitgym.models.RealmModels.plans;
+import com.application.fitgym.models.RealmModels.status;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class PacksAdapters extends RecyclerView.Adapter<PacksAdapters.PackViewHolder> {

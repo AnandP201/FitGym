@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,9 +18,8 @@ import android.widget.Toast;
 import com.application.fitgym.PlanEditInterface;
 import com.application.fitgym.R;
 import com.application.fitgym.adapters.PlansAdapter;
-import com.application.fitgym.adapters.TaskAdapter;
 import com.application.fitgym.helpers.GymApplication;
-import com.application.fitgym.models.plans;
+import com.application.fitgym.models.RealmModels.plans;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import io.realm.Realm;

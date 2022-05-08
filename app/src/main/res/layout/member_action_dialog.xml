@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:background="@drawable/member_dialog_background"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/member_action_dialog_primary_dets"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/darkColor"
+            android:text="Name and id here..."
+            android:fontFamily="@font/quicksand_medium"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/member_action_dialog_memSince"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/darkColor"
+            android:text="Member since here"
+            android:fontFamily="@font/quicksand_medium"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/member_action_dialog_plans"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/darkColor"
+            android:text="Plans here....."
+            android:fontFamily="@font/quicksand_medium"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/member_action_remove_member"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:backgroundTint="@color/secondaryDarkColor"
+            android:textColor="@color/primaryTextColor"
+            android:fontFamily="@font/quicksand_medium"
+            android:textStyle="bold"
+            android:drawableTint="@color/primaryTextColor"
+            android:text="REMOVE MEMBER"
+            android:drawableStart="@drawable/ic_baseline_delete_24"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

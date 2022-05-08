@@ -1,6 +1,5 @@
 package com.application.fitgym.activities.customer;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,12 +7,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,17 +18,10 @@ import com.application.fitgym.MemberDetailsInterface;
 import com.application.fitgym.R;
 import com.application.fitgym.adapters.MembersAdapter;
 import com.application.fitgym.helpers.GymApplication;
-import com.application.fitgym.models.customers;
-import com.application.fitgym.models.resources;
-import com.application.fitgym.models.status;
+import com.application.fitgym.models.RealmModels.customers;
+import com.application.fitgym.models.RealmModels.resources;
+import com.application.fitgym.models.RealmModels.status;
 
-import org.bson.types.Symbol;
-
-import java.util.Arrays;
-import java.util.function.BiConsumer;
-
-import io.realm.OrderedCollectionChangeSet;
-import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;

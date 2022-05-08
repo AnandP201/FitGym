@@ -1,4 +1,4 @@
-package com.application.fitgym.helpers;
+package com.application.fitgym.models.CustomModels;
 
 import java.io.Serializable;
 

@@ -20,10 +20,10 @@ import com.application.fitgym.ApproveCustomerInterface;
 import com.application.fitgym.R;
 import com.application.fitgym.adapters.ToRegisterCustomersAdapter;
 import com.application.fitgym.helpers.GymApplication;
-import com.application.fitgym.models.admin;
-import com.application.fitgym.models.customers;
-import com.application.fitgym.models.resources;
-import com.application.fitgym.models.status;
+import com.application.fitgym.models.RealmModels.admin;
+import com.application.fitgym.models.RealmModels.customers;
+import com.application.fitgym.models.RealmModels.resources;
+import com.application.fitgym.models.RealmModels.status;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

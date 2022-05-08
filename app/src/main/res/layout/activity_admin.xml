@@ -62,14 +62,13 @@
             android:fontFamily="@font/catamaran_regular"
             android:textSize="14sp"
             android:textColor="@color/common_google_signin_btn_text_light"
-            android:padding="5dp"
+            android:padding="4dp"
             android:text="Registered customers "
             android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -151,7 +150,7 @@
                 <TextView
                     android:id="@+id/admin_dashboard_planscount_text"
                     android:layout_width="60dp"
-                    android:textSize="42sp"
+                    android:textSize="36sp"
                     android:text="0"
                     android:shadowColor="?android:attr/colorPrimaryDark"
                     android:shadowRadius="5"
@@ -182,7 +181,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="8"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="14dp">
         <View
             android:layout_width="0dp"
             android:layout_height="3dp"
