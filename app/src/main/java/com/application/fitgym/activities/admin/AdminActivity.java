@@ -174,15 +174,15 @@ public class AdminActivity extends AppCompatActivity {
 
 
 
-        custCountListener= (RealmChangeListener<RealmResults<customers>>) realm -> {
+        custCountListener= realm -> {
             setCount();
         };
 
-        plansCountListener= (RealmChangeListener<RealmResults<plans>>) realm->{
+        plansCountListener= realm->{
             setPlansCount();
         };
 
-        adminRealmListener = (RealmChangeListener<RealmResults<admin>>) realm->{
+        adminRealmListener = realm->{
             setName();
         };
 

@@ -11,12 +11,15 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 
 import android.app.Service;
+import android.content.AsyncQueryHandler;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,86 +50,181 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.bson.Document;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.User;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.sync.SyncConfiguration;
 
+
+class object{
+    String activePlans;
+    String gymID;
+    String memberSince;
+    String duration;
+
+    public object(String a,String g,String m,String d){
+        this.activePlans=a;
+        this.gymID=g;
+        this.memberSince=m;
+        this.duration=d;
+    }
+}
 public class HomeActivity extends AppCompatActivity implements ImageUploadInterface {
 
     private App app;
     Toolbar toolbar;
 
     customers currentCustomer;
-    final public static int SELECT_PICTURE=200;
+    final public static int SELECT_PICTURE = 200;
     resources currentCustomerResource;
-    final static String NO_PLAN_PURCHASED="Buy a basic plan to be a member";
-    final static String NO_ADDON_PURCHASED="No add-ons purchased";
-    static boolean SET_STATUS=true;
-    status currentStatus;
+    final static String NO_PLAN_PURCHASED = "Buy a basic plan to be a member";
+    final static String NO_ADDON_PURCHASED = "No add-ons purchased";
+
     private ImageView displayPictureImageView;
-    private boolean IS_MEMBER=false;
-    private boolean IS_ACCEPTED=false;
-    TextView uniqueIDTextView,nameTextView,normalPlanTextView,addOnPlanTextView;
+    private boolean IS_MEMBER = false;
+    private boolean IS_ACCEPTED = false;
+
+    String MEMBER_SINCE="",ACTIVE_PLANS="",ID="",DURATION="";
+
+    final static int SET_STATUS_OFFLINE=1;
+    final static int SET_STATUS_ONLINE=2;
+    final static int FETCH_STATUS_DOC=3;
+
+    TextView uniqueIDTextView, nameTextView, normalPlanTextView, addOnPlanTextView;
     GridView cDashboardGridview;
     List<CustomerDashMenuItems> customerDashMenuItems;
-    Realm customersRealm,resourcesRealm,statusRealm;
+    Realm customersRealm, resourcesRealm;
     CardView cardView;
     ImageView profileImg;
-    String ID;
     private LinearLayout linearLayout;
     LinearLayout planDetsLayout;
 
 
     RealmResults<customers> customersRealmResults;
     RealmResults<resources> resourcesRealmResults;
-    RealmResults<status> statusRealmResults;
+
+    RealmChangeListener<RealmResults<customers>> customersListener;
+    RealmChangeListener<RealmResults<resources>> resourceListener;
+
     ImageActionSheet imageActionSheet;
 
+    class fetchOrSetStatus extends AsyncTask<Integer,Void,Void>{
 
-    
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            try{
+                MongoClient client=app.currentUser().getMongoClient("mongodb-atlas");
+                MongoDatabase db=client.getDatabase("GymDB");
+                MongoCollection<Document> coll=db.getCollection("status");
+                Document filter=new Document("userAuthID",app.currentUser().getId());
+                Document curr=coll.find(filter).first().get();
+
+                String a=curr.getString("activePlans");
+                String g=curr.getString("gymUserID");
+                String m=curr.getString("memberSince");
+                String d=curr.getString("planActiveDuration");
+
+                object o=new object(a,g,m,d);
+
+                int option=integers[0];
+
+                if(option==1){
+                    runOnUiThread(()->{
+                        Document update=new Document("$set",new Document("stats","offline"));
+                        coll.updateOne(filter,update).getAsync(result->{
+                            if(result.isSuccess()){
+                                app.currentUser().logOutAsync(response->{
+                                    if(response.isSuccess()){
+                                        startActivity(new Intent(HomeActivity.this, LoginSignUpActivity.class));
+                                        finish();
+                                    }
+                                });
+                                Toast.makeText(HomeActivity.this,"Logged out successfully!",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    });
+                }else if(option==2){
+                    runOnUiThread(()->{
+                        Document update=new Document("$set",new Document("stats","online"));
+                        coll.updateOne(filter,update).getAsync(result->{
+                            if(result.isSuccess()){
+                                Log.i("UPDATED",curr.toString());
+                            }
+                        });
+                    });
+
+                }else{
+                    runOnUiThread(() -> {
+                        ACTIVE_PLANS=o.activePlans;
+                        DURATION=o.duration;
+                        ID=o.gymID;
+                        MEMBER_SINCE=o.memberSince;
+
+                        uniqueIDTextView.setText(ID.isEmpty()?"Currently, you are under-registration":String.format("FitGym ID: %s",o.gymID));
+                        IS_MEMBER=true;
+
+                        checkAndSetUserPlans();
+                    });
+                }
+
+
+            }catch (Exception e){
+
+            }
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        app = GymApplication.getGlobalAppInstance();
 
-        app= GymApplication.getGlobalAppInstance();
-        View view=findViewById(R.id.profile_summary);
 
-        cardView=findViewById(R.id.profile_card);
-        linearLayout=findViewById(R.id.customer_home_layout);
-        displayPictureImageView=view.findViewById(R.id.home_header_imageView);
-        uniqueIDTextView=view.findViewById(R.id.gym_uniqueID_textView);
-        nameTextView=view.findViewById(R.id.name_welcome_textView);
-        cDashboardGridview=findViewById(R.id.customer_dashboard_gridview);
-        normalPlanTextView=findViewById(R.id.membership_plan);
-        imageActionSheet=new ImageActionSheet(HomeActivity.this);
-        addOnPlanTextView=findViewById(R.id.addon_plans);
-        planDetsLayout=findViewById(R.id.plan_details);
+        View view = findViewById(R.id.profile_summary);
 
-        customerDashMenuItems= Arrays.asList(CustomerDashMenuItems.dashBoardItems);
-        CustomersAdapter customersAdapter=new CustomersAdapter(HomeActivity.this,customerDashMenuItems);
+        cardView = findViewById(R.id.profile_card);
+        linearLayout = findViewById(R.id.customer_home_layout);
+        displayPictureImageView = view.findViewById(R.id.home_header_imageView);
+        uniqueIDTextView = view.findViewById(R.id.gym_uniqueID_textView);
+        nameTextView = view.findViewById(R.id.name_welcome_textView);
+        cDashboardGridview = findViewById(R.id.customer_dashboard_gridview);
+        normalPlanTextView = findViewById(R.id.membership_plan);
+        imageActionSheet = new ImageActionSheet(HomeActivity.this);
+        addOnPlanTextView = findViewById(R.id.addon_plans);
+        planDetsLayout = findViewById(R.id.plan_details);
+
+        customerDashMenuItems = Arrays.asList(CustomerDashMenuItems.dashBoardItems);
+        CustomersAdapter customersAdapter = new CustomersAdapter(HomeActivity.this, customerDashMenuItems);
         cDashboardGridview.setAdapter(customersAdapter);
 
-        toolbar=findViewById(R.id.customer_dashboard_toolbar);
+        toolbar = findViewById(R.id.customer_dashboard_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Dashboard");
+
+        new fetchOrSetStatus().execute(FETCH_STATUS_DOC);
 
         cardView.setOnClickListener(view1 -> {
             if(currentCustomer!=null){
                 String name=currentCustomer.getName();
                 String age=currentCustomer.getAge();
                 String gender=currentCustomer.getGender();
-                String memberSince=currentStatus.getMemberSince();
-                String activePlans=currentStatus.getActivePlans();
-                String gymID=currentStatus.getGymUserID();
+                String memberSince=MEMBER_SINCE;
+                String activePlans=ACTIVE_PLANS;
+                String gymID=ID;
 
                 ProfileData data=new ProfileData(name,gymID,memberSince,activePlans,age,gender,currentCustomerResource.getData());
 
@@ -172,193 +270,128 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
 
             }
         });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(app.currentUser()!=null){
 
-            customersRealm=Realm.getInstance(new SyncConfiguration
+        if (app.currentUser() != null) {
+
+            new fetchOrSetStatus().execute(SET_STATUS_ONLINE);
+
+            customersRealm = Realm.getInstance(new SyncConfiguration
                     .Builder(app.currentUser(), "users")
                     .allowWritesOnUiThread(true)
                     .allowQueriesOnUiThread(true)
                     .build());
 
-            customersRealmResults=customersRealm.where(customers.class).contains("authID",app.currentUser().getId()).findAll();
+            customersRealmResults = customersRealm.where(customers.class).contains("authID", app.currentUser().getId()).findAll();
 
-            resourcesRealm=Realm.getInstance(new SyncConfiguration
+            resourcesRealm = Realm.getInstance(new SyncConfiguration
                     .Builder(app.currentUser(), "data")
                     .allowQueriesOnUiThread(true)
                     .allowWritesOnUiThread(true)
                     .build());
-            resourcesRealmResults=resourcesRealm.where(resources.class).equalTo("userID",app.currentUser().getId()).findAll();
-
-            statusRealm=Realm.getInstance(new SyncConfiguration
-                    .Builder(app.currentUser(),"members")
-                    .allowWritesOnUiThread(true)
-                    .allowQueriesOnUiThread(true)
-                    .build());
-            statusRealmResults=statusRealm.where(status.class).findAll();
-            currentStatus=statusRealmResults.where().equalTo("userAuthID",app.currentUser().getId()).findFirst();
+            resourcesRealmResults = resourcesRealm.where(resources.class).equalTo("userID", app.currentUser().getId()).findAll();
         }
 
-
-        if(currentStatus!=null){
-            statusRealm.executeTransaction(realm -> currentStatus.setStats("online"));
-            if(currentStatus.getActivePlans().equalsIgnoreCase("")){
-                IS_MEMBER=false;
-            }else{
-                IS_MEMBER=true;
-            }
-            checkAndSetUserPlans();
-        }
-
-        if(customersRealmResults.size()!=0){
-            currentCustomer=customersRealm.where(customers.class)
-                    .contains("authID",app.currentUser().getId()).findFirst();
-
-            checkAndSetUserPlans();
+        if (customersRealmResults.size() != 0) {
+            currentCustomer = customersRealm.where(customers.class)
+                    .contains("authID", app.currentUser().getId()).findFirst();
             checkCurrentRegisteredStatus();
-
-            if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("NA")){
-                uniqueIDTextView.setText("Currently, you are under-registration");
-            }
-            else{
-
-                if(currentStatus!=null){
-                    ID=currentStatus.getGymUserID();
-                    uniqueIDTextView.setText("Fitgym ID: "+currentStatus.getGymUserID());
-                }
-            }
             setHeaderName();
         }
 
-        if(resourcesRealmResults.size()!=0){
-            currentCustomerResource=resourcesRealm.where(resources.class)
-                    .contains("userID",app.currentUser().getId()).findFirst();
-            if(currentCustomerResource!=null){
+        if (resourcesRealmResults.size() != 0) {
+            currentCustomerResource = resourcesRealm.where(resources.class)
+                    .contains("userID", app.currentUser().getId()).findFirst();
+            if (currentCustomerResource != null) {
                 setHeaderImage();
             }
         }
 
 
-
-        customersRealmResults.addChangeListener(customers -> {
-            currentCustomer=customersRealm.where(customers.class)
-                    .contains("authID",app.currentUser().getId()).findFirst();
-            if(currentCustomer!=null){
-                checkCurrentRegisteredStatus();
-                checkAndSetUserPlans();
-                if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("NA")){
-                    uniqueIDTextView.setText("Currently, you are under-registration");
-                }
-                else{
-                    if(currentStatus!=null){
-                        uniqueIDTextView.setText(currentStatus.getGymUserID());
-                    }
-                }
-            }
+        customersListener = customers -> {
+            currentCustomer = customersRealm.where(customers.class)
+                    .contains("authID", app.currentUser().getId()).findFirst();
+            checkCurrentRegisteredStatus();
             setHeaderName();
-        });
+        };
 
-        resourcesRealmResults.addChangeListener(resources -> {
-            currentCustomerResource=resourcesRealm.where(resources.class)
-                    .contains("userID",app.currentUser().getId())
+        resourceListener = resources -> {
+            currentCustomerResource = resourcesRealm.where(resources.class)
+                    .contains("userID", app.currentUser().getId())
                     .findFirst();
-            if(currentCustomerResource!=null){
+            if (currentCustomerResource != null) {
                 setHeaderImage();
             }
-        });
-
-        statusRealmResults.addChangeListener(realm -> {
-            if(app.currentUser()!=null){
-                currentStatus=statusRealm
-                        .where(status.class)
-                        .equalTo("userAuthID",app.currentUser().getId())
-                        .findFirst();
-            }
-
-           if(currentStatus!=null){
-               if(currentStatus.getActivePlans().equalsIgnoreCase("")){
-                   IS_MEMBER=false;
-               }else{
-
-                   IS_MEMBER=true;
-               }
-           }
-
-            if(currentStatus.getStats().equalsIgnoreCase("offline") && currentStatus!=null && SET_STATUS){
-                statusRealm.executeTransaction(realm1 -> {
-                    currentStatus.setStats("online");
-                });
-            }
-
-            ID=currentStatus.getGymUserID();
-            uniqueIDTextView.setText("Fitgym ID: "+currentStatus.getGymUserID());
-            checkAndSetUserPlans();
-        });
+        };
 
 
-        View.OnClickListener snackBarListener= view->{
-            startActivity(new Intent(HomeActivity.this,CustomerPlansActivity.class).putExtra("title","Purchase Plan"));
+        customersRealmResults.addChangeListener(customersListener);
+
+        resourcesRealmResults.addChangeListener(resourceListener);
+
+
+        View.OnClickListener snackBarListener = view -> {
+            startActivity(new Intent(HomeActivity.this, CustomerPlansActivity.class).putExtra("title", "Purchase Plan"));
         };
 
         cDashboardGridview.setOnItemClickListener((adapterView, view1, i, l) -> {
+            resourcesRealmResults.removeChangeListener(resourceListener);
+            customersRealmResults.removeChangeListener(customersListener);
+
             closeRealms();
-            if(customerDashMenuItems.get(i).getAction().equalsIgnoreCase("tasks")){
-                startActivity(new Intent(this,TaskActivity.class));
-            }
-            else if (IS_ACCEPTED && IS_MEMBER) {
+
+
+            if (customerDashMenuItems.get(i).getAction().equalsIgnoreCase("tasks")) {
+                startActivity(new Intent(this, TaskActivity.class));
+            } else if (IS_ACCEPTED && IS_MEMBER) {
                 String action = customerDashMenuItems.get(i).getAction();
                 switch (action) {
                     case "plans":
-                        startActivity(new Intent(this,CustomerPlansActivity.class));
+                        startActivity(new Intent(this, CustomerPlansActivity.class));
                         break;
                     case "people":
-                        startActivity(new Intent(this,PeersActivity.class));
+                        startActivity(new Intent(this, PeersActivity.class));
                         break;
                     case "bills":
-                        if(currentCustomer!=null){
-                            startActivity(new Intent(this,BillingActivity.class).putExtra("ID",ID));
-                        }else{
-                            Toast.makeText(HomeActivity.this,"Please wait! Data is loading....",Toast.LENGTH_SHORT).show();
+                        if (currentCustomer != null) {
+                            startActivity(new Intent(this, BillingActivity.class).putExtra("ID", ID));
+                        } else {
+                            Toast.makeText(HomeActivity.this, "Please wait! Data is loading....", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     default:
                         Toast.makeText(this, customerDashMenuItems.get(i).getAction(), Toast.LENGTH_SHORT).show();
                 }
-            }else if(IS_ACCEPTED && !IS_MEMBER){
-                Snackbar.make(this,linearLayout,"Membership required!", BaseTransientBottomBar.LENGTH_LONG)
-                        .setAction("BUY PLAN",snackBarListener)
+            } else if (IS_ACCEPTED && !IS_MEMBER) {
+                Snackbar.make(this, linearLayout, "Membership required!", BaseTransientBottomBar.LENGTH_LONG)
+                        .setAction("BUY PLAN", snackBarListener)
                         .show();
-            }
-            else {
-                Snackbar.make(this,linearLayout,"Your registration needs approval.Please wait!", BaseTransientBottomBar.LENGTH_LONG)
+            } else {
+                Snackbar.make(this, linearLayout, "Your registration needs approval.Please wait!", BaseTransientBottomBar.LENGTH_LONG)
                         .show();
             }
         });
     }
 
-    private void checkAndSetUserPlans(){
-      if(currentStatus!=null){
-          planDetsLayout.setVisibility(View.VISIBLE);
-          String str=currentStatus.getActivePlans();
-
-          if(str.equalsIgnoreCase("")){
-              normalPlanTextView.setText(NO_PLAN_PURCHASED);
-              addOnPlanTextView.setText(NO_ADDON_PURCHASED);
-          }else if(str.contains("NP") && !str.contains("AP")){
-              int days=Integer.parseInt(currentStatus.getPlanActiveDuration());
-              normalPlanTextView.setText(String.format("Membership Plan active. %d days left",days));
-              addOnPlanTextView.setText(NO_ADDON_PURCHASED);
-          }else if(str.contains("NP") && str.contains("AP")){
-              int days=Integer.parseInt(currentStatus.getPlanActiveDuration());
-              normalPlanTextView.setText(String.format("Membership Plan active. %d days left",days));
-              addOnPlanTextView.setText("Add-ons active!");
-          }
-      }
+    private void checkAndSetUserPlans() {
+        planDetsLayout.setVisibility(View.VISIBLE);
+        String str=ACTIVE_PLANS;
+        if(str.equalsIgnoreCase("")){
+            normalPlanTextView.setText(NO_PLAN_PURCHASED);
+            addOnPlanTextView.setText(NO_ADDON_PURCHASED);
+        }else if(str.contains("NP") && !str.contains("AP")){
+            int days=Integer.parseInt(DURATION);
+            normalPlanTextView.setText(String.format("Membership Plan active. %d days left",days));
+            addOnPlanTextView.setText(NO_ADDON_PURCHASED);
+        }else if(str.contains("NP") && str.contains("AP")){
+            int days=Integer.parseInt(DURATION);
+            normalPlanTextView.setText(String.format("Membership Plan active. %d days left",days));
+            addOnPlanTextView.setText("Add-ons active!");
+        }
     }
 
 
@@ -386,14 +419,8 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
 
 
     private void closeRealms(){
-        statusRealm.close();
         customersRealm.close();
         resourcesRealm.close();
-    }
-
-
-public void showToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
 
@@ -405,25 +432,7 @@ public void showToast(String msg){
     }
 
     public void logout(){
-       if(currentStatus!=null){
-           SET_STATUS=false;
-
-           statusRealm.executeTransaction(realm -> {
-               currentStatus.setStats("offline");
-           });
-
-       }
-        if(app.currentUser()!=null){
-            User user=app.currentUser();
-            user.logOutAsync(response->{
-               if(response.isSuccess()){
-                   startActivity(new Intent(HomeActivity.this, LoginSignUpActivity.class));
-                   finish();
-               }
-            });
-
-        }
-        Toast.makeText(this,"Logged out successfully!",Toast.LENGTH_LONG).show();
+        new fetchOrSetStatus().execute(SET_STATUS_OFFLINE);
     }
 
     @Override
@@ -442,42 +451,23 @@ public void showToast(String msg){
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        customersRealmResults.removeAllChangeListeners();
-        resourcesRealmResults.removeAllChangeListeners();
-        statusRealmResults.removeAllChangeListeners();
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        new fetchOrSetStatus().execute(SET_STATUS_OFFLINE);
 
-
-        SET_STATUS=false;
-
-        statusRealm.executeTransaction(realm -> currentStatus.setStats("offline"));
-
-
-       if(!customersRealm.isClosed() && !resourcesRealm.isClosed() && !statusRealm.isClosed()){
-          customersRealmResults.removeAllChangeListeners();
-          resourcesRealmResults.removeAllChangeListeners();
-          statusRealmResults.removeAllChangeListeners();
-
+       if(!customersRealm.isClosed() && !resourcesRealm.isClosed()){
           closeRealms();
        }
-
 
     }
 
     private void aboutUs() {
-        showToast("About Us");
+
     }
 
     private void resetPassword() {
-    showToast("Password reset!");
     }
 
     @Override

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/member_item_card"
+        android:layout_width="match_parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:backgroundTint="@color/primaryTextColor"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="10"
+            android:padding="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/member_profile_picture"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:contentDescription="@string/image_name"
+                        android:src="@drawable/ic_account_circle"
+                        app:tint="#696969" />
+
+                    <TextView
+                        android:id="@+id/member_status_indicator"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignEnd="@+id/member_profile_picture"
+                        android:layout_alignBottom="@+id/member_profile_picture"
+                        android:background="@drawable/offline_icon" />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/member_name_text"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/darkColor"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:text="Customer name here"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/member_gym_id_text"
+                    android:padding="5dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/darkColor"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:text="Customer gym id here"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

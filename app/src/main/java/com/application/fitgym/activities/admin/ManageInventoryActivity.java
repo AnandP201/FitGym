@@ -438,7 +438,7 @@ public class ManageInventoryActivity extends AppCompatActivity {
                 tempList.add(new Bill(id,amount,billFor,title,on));
             }));
 
-            String []arr=idList.toArray(new String[idList.size()]);
+
 
             for(Bill b:tempList){
                 total+=Double.parseDouble(b.getBillAmount());
@@ -448,10 +448,9 @@ public class ManageInventoryActivity extends AppCompatActivity {
             final Double money=total;
             runOnUiThread(() -> {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
-                        R.layout.spinner_item, arr);
+                        R.layout.spinner_item, idList);
 
                 adapter.setDropDownViewResource(R.layout.spinner_item);
-
                 totalBillAmountText.setText("₹ "+formatCurrency(money));
 
                 usersListSpinner.setAdapter(adapter);

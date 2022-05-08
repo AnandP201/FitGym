@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.application.fitgym.R;
 import com.application.fitgym.activities.admin.AdminActivity;
 import com.application.fitgym.activities.customer.HomeActivity;
+import com.application.fitgym.activities.customer.PeersActivity;
+import com.application.fitgym.databinding.ActivityPeersBinding;
 import com.application.fitgym.helpers.GymApplication;
 import com.application.fitgym.helpers.UserInfo;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

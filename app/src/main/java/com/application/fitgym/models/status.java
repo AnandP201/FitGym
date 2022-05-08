@@ -67,18 +67,4 @@ public class status extends RealmObject{
     public String getStats() {
         return stats;
     }
-
-    @Override
-    public String toString() {
-        return "status{" +
-                "_id=" + _id +
-                ", _partition='" + _partition + '\'' +
-                ", userAuthID='" + userAuthID + '\'' +
-                ", gymUserID='" + gymUserID + '\'' +
-                ", activePlans='" + activePlans + '\'' +
-                ", stats='" + stats + '\'' +
-                ", planActiveDuration='" + planActiveDuration + '\'' +
-                ", memberSince='" + memberSince + '\'' +
-                '}';
-    }
 }
