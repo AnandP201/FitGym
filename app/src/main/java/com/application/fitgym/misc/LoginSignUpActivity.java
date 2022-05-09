@@ -198,19 +198,20 @@ public class LoginSignUpActivity extends AppCompatActivity implements View.OnCli
             MongoClient client=app.currentUser().getMongoClient("mongodb-atlas");
             MongoDatabase db=client.getDatabase("GymDB");
             Document filter=new Document("authID",str[0]);
-            Document check=new Document("RegistrationStatus","INV");
             MongoCollection<Document> collection=db.getCollection("customers");
 
             MongoCollection<Document> adminCollection=db.getCollection("admin");
 
-            if(collection.count(check).get()>=1){
-                return -1;
-            }
             if(adminCollection.count(filter).get()>=1){
                 return 2;
             }
             if(collection.count(filter).get()>=1){
-                return 1;
+                if(collection.find(filter).first().get().getString("RegistrationStatus").equalsIgnoreCase("INV"))
+                {
+                    return -1;
+                }else{
+                    return 1;
+                }
             }
 
             return 0;

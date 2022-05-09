@@ -229,8 +229,13 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
                 String memberSince=MEMBER_SINCE;
                 String activePlans=ACTIVE_PLANS;
                 String gymID=ID;
+                ProfileData data;
 
-                ProfileData data=new ProfileData(name,gymID,memberSince,activePlans,age,gender,currentCustomerResource.getData());
+if(currentCustomerResource.getData()==null){
+    data=new ProfileData(name,gymID,memberSince,activePlans,age,gender,null);
+}else{
+    data=new ProfileData(name,gymID,memberSince,activePlans,age,gender,currentCustomerResource.getData());
+}
 
                 View myview= LayoutInflater.from(this).inflate(R.layout.profile_card_dialog,null);
 
