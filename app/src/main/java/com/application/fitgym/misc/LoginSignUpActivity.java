@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.bson.Document;
 
@@ -52,6 +55,7 @@ public class LoginSignUpActivity extends AppCompatActivity implements View.OnCli
     public GoogleSignInClient googleSignInClient;
     private GoogleSignInAccount account;
 
+    LinearLayout linearLayout;
 
 
 
@@ -67,6 +71,7 @@ public class LoginSignUpActivity extends AppCompatActivity implements View.OnCli
         alert_dialog_text=dialogView.findViewById(R.id.dialog_textbox);
         alert=new AlertDialog.Builder(this)
                 .setView(dialogView).create();
+        linearLayout=findViewById(R.id.login_signup_main);
 
         alert.setCancelable(false);
 
@@ -193,10 +198,14 @@ public class LoginSignUpActivity extends AppCompatActivity implements View.OnCli
             MongoClient client=app.currentUser().getMongoClient("mongodb-atlas");
             MongoDatabase db=client.getDatabase("GymDB");
             Document filter=new Document("authID",str[0]);
+            Document check=new Document("RegistrationStatus","INV");
             MongoCollection<Document> collection=db.getCollection("customers");
 
             MongoCollection<Document> adminCollection=db.getCollection("admin");
 
+            if(collection.count(check).get()>=1){
+                return -1;
+            }
             if(adminCollection.count(filter).get()>=1){
                 return 2;
             }
@@ -228,6 +237,10 @@ public class LoginSignUpActivity extends AppCompatActivity implements View.OnCli
             else if(i==2){
                 startActivity(new Intent(LoginSignUpActivity.this, AdminActivity.class));
                 finish();
+            }
+            else if(i==-1){
+                alert.dismiss();
+                Snackbar.make(linearLayout,"You are banned from the gym, for your behaviour!", BaseTransientBottomBar.LENGTH_LONG).show();
             }
             else{
                 if(app.currentUser().getProviderType()== Credentials.Provider.GOOGLE) {

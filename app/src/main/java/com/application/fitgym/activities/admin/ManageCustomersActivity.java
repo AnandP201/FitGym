@@ -52,7 +52,7 @@ public class ManageCustomersActivity extends AppCompatActivity implements Member
     RecyclerView recyclerView;
     MemberActionAdapter adapter;
     ProgressBar loadingBar;
-    Button button,removeButton,loadButton;
+    Button button,removeButton;
     static boolean STOP_LOADING=false;
     AlertDialog removeMemberDialog;
     TextView loadingText,dialogDetsTV,dialogPlansTV,dialogmemSinceTV;
@@ -196,11 +196,6 @@ public class ManageCustomersActivity extends AppCompatActivity implements Member
         actionBar.setTitle("FitGym Customers");
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
 
     @Override
     protected void onStart() {
@@ -301,17 +296,17 @@ public class ManageCustomersActivity extends AppCompatActivity implements Member
             List<String> idList=new ArrayList<>();
             idList.addAll(Arrays.asList(ids.substring(1,ids.length()-1).split(", ")));
 
-            List<String> toRemoveList=new ArrayList<>();
+            List<String> newList=new ArrayList<>();
 
             for(String id:idList){
                 if(!id.equalsIgnoreCase(TO_REMOVE_GYM_ID)){
-                    toRemoveList.add(id);
+                    newList.add(id);
                 }
             }
 
-            String toReg=toRemoveList.toString();
+            String toReg=newList.toString();
             Document f=new Document("adminName","admin@fitgym");
-            Document idDoc=new Document("customerIDs",toReg);
+            Document idDoc=new Document("$set",new Document("customerIDs",toReg));
 
             runOnUiThread(() -> {
                 adminColl.findOneAndUpdate(f,idDoc).getAsync(response->{

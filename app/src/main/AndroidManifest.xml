@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitGym">
         <activity
+            android:name=".activities.customer.AboutUs"
+            android:exported="false" />
+        <activity
             android:name=".activities.customer.BillingActivity"
             android:exported="false" />
         <activity

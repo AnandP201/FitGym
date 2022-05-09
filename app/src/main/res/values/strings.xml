@@ -25,6 +25,6 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="image_name">Profile Photo</string>
-
+    <string name="about">FitGym is a management app for local gym in an area.\n\nSome salient features :\n\nFree and easy to use\n\nTrack real-time user presence\n\nEasily manage bills and records\n\nCreate or delete tasks/exercises\n\nMore updates to app will be coming soon..\n\n</string>
 
 </resources>

@@ -121,57 +121,71 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
                 Document filter=new Document("userAuthID",app.currentUser().getId());
                 Document curr=coll.find(filter).first().get();
 
-                String a=curr.getString("activePlans");
-                String g=curr.getString("gymUserID");
-                String m=curr.getString("memberSince");
-                String d=curr.getString("planActiveDuration");
+               if(curr==null){
+                   if(integers[0]==SET_STATUS_OFFLINE){
+                      runOnUiThread(()->{
+                          app.currentUser().logOutAsync(response->{
+                              if(response.isSuccess()){
+                                  startActivity(new Intent(HomeActivity.this, LoginSignUpActivity.class));
+                                  finish();
+                              }
+                          });
+                          Toast.makeText(HomeActivity.this,"Logged out successfully!",Toast.LENGTH_LONG).show();
+                      });
+                   }
+                   return null;
+               }else{
+                   String a=curr.getString("activePlans");
+                   String g=curr.getString("gymUserID");
+                   String m=curr.getString("memberSince");
+                   String d=curr.getString("planActiveDuration");
 
-                object o=new object(a,g,m,d);
+                   object o=new object(a,g,m,d);
 
-                int option=integers[0];
+                   int option=integers[0];
 
-                if(option==1){
-                    runOnUiThread(()->{
-                        Document update=new Document("$set",new Document("stats","offline"));
-                        coll.updateOne(filter,update).getAsync(result->{
-                            if(result.isSuccess()){
-                                app.currentUser().logOutAsync(response->{
-                                    if(response.isSuccess()){
-                                        startActivity(new Intent(HomeActivity.this, LoginSignUpActivity.class));
-                                        finish();
-                                    }
-                                });
-                                Toast.makeText(HomeActivity.this,"Logged out successfully!",Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    });
-                }else if(option==2){
-                    runOnUiThread(()->{
-                        Document update=new Document("$set",new Document("stats","online"));
-                        coll.updateOne(filter,update).getAsync(result->{
-                            if(result.isSuccess()){
-                                Log.i("UPDATED",curr.toString());
-                            }
-                        });
-                    });
+                   if(option==1){
+                       runOnUiThread(()->{
+                           Document update=new Document("$set",new Document("stats","offline"));
+                           coll.updateOne(filter,update).getAsync(result->{
+                               if(result.isSuccess()){
+                                   app.currentUser().logOutAsync(response->{
+                                       if(response.isSuccess()){
+                                           startActivity(new Intent(HomeActivity.this, LoginSignUpActivity.class));
+                                           finish();
+                                       }
+                                   });
+                                   Toast.makeText(HomeActivity.this,"Logged out successfully!",Toast.LENGTH_LONG).show();
+                               }
+                           });
+                       });
+                   }else if(option==2){
+                       runOnUiThread(()->{
+                           Document update=new Document("$set",new Document("stats","online"));
+                           coll.updateOne(filter,update).getAsync(result->{
+                               if(result.isSuccess()){
+                                   Log.i("UPDATED",curr.toString());
+                               }
+                           });
+                       });
 
-                }else{
-                    runOnUiThread(() -> {
-                        ACTIVE_PLANS=o.activePlans;
-                        DURATION=o.duration;
-                        ID=o.gymID;
-                        MEMBER_SINCE=o.memberSince;
+                   }else{
+                       runOnUiThread(() -> {
+                           ACTIVE_PLANS = o.activePlans;
+                           DURATION = o.duration;
+                           ID = o.gymID;
+                           MEMBER_SINCE = o.memberSince;
 
-                        uniqueIDTextView.setText(ID.isEmpty()?"Currently, you are under-registration":String.format("FitGym ID: %s",o.gymID));
-                        IS_MEMBER=true;
-
-                        checkAndSetUserPlans();
-                    });
-                }
+                           uniqueIDTextView.setText(o.gymID==null ? "Currently, you are under-registration" : String.format("FitGym ID: %s", o.gymID));
+                           IS_MEMBER = true;
+                           checkAndSetUserPlans();
+                       });
+                   }
+               }
 
 
             }catch (Exception e){
-
+                Log.i("Tag",e.toString());
             }
             return null;
         }
@@ -241,12 +255,16 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
                 plansText.setText("Plans active : "+((data.getPlans().isEmpty())?"NA":data.getPlans()));
                 gymIDtext.setText((data.getGymID().isEmpty())?"NA":data.getGymID());
                 sinceText.setText("Member since : "+((data.getMembersince().isEmpty())?"NA":data.getMembersince()));
-                byte []b=data.getImageData();
+                if(data.getImageData()!=null){
+                    byte []b=data.getImageData();
 
-                Bitmap bitmap= BitmapFactory.decodeByteArray(b,0,b.length);
-                RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-                roundedBitmapDrawable.setCircular(true);
-                profileImg.setImageDrawable(roundedBitmapDrawable);
+                    Bitmap bitmap= BitmapFactory.decodeByteArray(b,0,b.length);
+                    RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(),bitmap);
+                    roundedBitmapDrawable.setCircular(true);
+                    profileImg.setImageDrawable(roundedBitmapDrawable);
+                }else{
+                    profileImg.setImageDrawable(null);
+                }
 
                 builder.setView(myview);
                 builder.setCancelable(true);
@@ -329,15 +347,20 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
         };
 
         cDashboardGridview.setOnItemClickListener((adapterView, view1, i, l) -> {
-            resourcesRealmResults.removeChangeListener(resourceListener);
-            customersRealmResults.removeChangeListener(customersListener);
 
-            closeRealms();
+            if(IS_ACCEPTED && IS_MEMBER){
+                resourcesRealmResults.removeChangeListener(resourceListener);
+                customersRealmResults.removeChangeListener(customersListener);
 
-
+                closeRealms();
+            }
             if (customerDashMenuItems.get(i).getAction().equalsIgnoreCase("tasks")) {
+                resourcesRealmResults.removeChangeListener(resourceListener);
+                customersRealmResults.removeChangeListener(customersListener);
+                closeRealms();
                 startActivity(new Intent(this, TaskActivity.class));
             } else if (IS_ACCEPTED && IS_MEMBER) {
+
                 String action = customerDashMenuItems.get(i).getAction();
                 switch (action) {
                     case "plans":
@@ -389,6 +412,8 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
         if(currentCustomer.getRegistrationStatus().equalsIgnoreCase("OK")){
             IS_ACCEPTED=true;
         }else{
+            checkAndSetUserPlans();
+            uniqueIDTextView.setText("Currently, you are under-registration");
             IS_ACCEPTED=false;
         }
     }
@@ -431,9 +456,6 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
             case R.id.logout_item:
                 logout();
                 return true;
-            case R.id.reset_password_item:
-                resetPassword();
-                return true;
             case R.id.aboutus_item:
                 aboutUs();
             default:
@@ -454,10 +476,8 @@ public class HomeActivity extends AppCompatActivity implements ImageUploadInterf
     }
 
     private void aboutUs() {
-
-    }
-
-    private void resetPassword() {
+        closeRealms();
+        startActivity(new Intent(HomeActivity.this,AboutUs.class));
     }
 
     @Override
